@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Long Lined Cover Letter
+% LaTeX Template
+% Version 2.0 (September 17, 2021)
+%
+% This template originates from:
+% https://www.LaTeXTemplates.com
+%
+% Authors: Fanchao Chen
+% (chenfc@fudan.edu.cn)
+%
+% License:
+% CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage{charter} % Use the Charter font
+
+\usepackage[
+	a4paper, % Paper size
+	top=1in, % Top margin
+	bottom=1in, % Bottom margin
+	left=1in, % Left margin
+	right=1in, % Right margin
+	%showframe % Uncomment to show frames around the margins for debugging purposes
+]{geometry}
+
+\setlength{\parindent}{0pt} % Paragraph indentation
+\setlength{\parskip}{1em} % Vertical space between paragraphs
+
+\usepackage{graphicx} % Required for including images
+
+\usepackage{fancyhdr} % Required for customizing headers and footers
+
+\fancypagestyle{firstpage}{%
+	\fancyhf{} % Clear default headers/footers
+	\renewcommand{\headrulewidth}{0pt} % No header rule
+	\renewcommand{\footrulewidth}{1pt} % Footer rule thickness
+}
+
+\fancypagestyle{subsequentpages}{%
+	\fancyhf{} % Clear default headers/footers
+	\renewcommand{\headrulewidth}{1pt} % Header rule thickness
+	\renewcommand{\footrulewidth}{1pt} % Footer rule thickness
+}
+
+\AtBeginDocument{\thispagestyle{firstpage}} % Use the first page headers/footers style on the first page
+\pagestyle{subsequentpages} % Use the subsequent pages headers/footers style on subsequent pages
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	FIRST PAGE HEADER
+%----------------------------------------------------------------------------------------
+
+%\includegraphics[width=0.4\textwidth]{fudan.png} % Logo
+
+\vspace{-1em} % Pull the rule closer to the logo
+
+\rule{\linewidth}{1pt} % Horizontal rule
+
+\bigskip\bigskip % Vertical whitespace
+
+%----------------------------------------------------------------------------------------
+%	YOUR NAME AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+%\hfill
+\begin{tabular}{l @{}}
+	\today \bigskip\\ % Date
+	  Lic. Juan Angel Isaula Mejia\\
+        Subgerente de Ciencia de Datos\\
+        Grupo Financiero Ficohsa\\
+	Tegucigalpa, Honduras \\ 
+	Phone: (+504) 9598-3540 \\
+	Email: juan.isaula@ficohsa.com
+\end{tabular}
+
+\bigskip % Vertical whitespace
+
+%----------------------------------------------------------------------------------------
+%	ADDRESSEE AND GREETING
+%---------------------------------------------------------------------------------------
+\bigskip % Vertical whitespace
+
+Instituto Eagle Nest School:
+
+\bigskip % Vertical whitespace
+
+%----------------------------------------------------------------------------------------
+%	LETTER CONTENT
+%----------------------------------------------------------------------------------------
+
+Me complace recomendar a Christian Gerando Argueta, Licenciando en Astronomía y Astrofísica, con quien he tenido el privilegio de colaborar en diferentes escenarios en el área de la docencia y ámbito investigativo. Durante el tiempo que he conocido a Christian, ha demostrado ser un profesional altamente competente, apasionado por su campo y con una gran capacidad analítica y de resolución de problemas.
+
+Christian posee un profundo conocimiento en el análisis de datos, modelado teórico y observación astronómica, además de habilidades destacadas en el manejo de software especializados (SQL, Python, R) en el entorno cientifico. Su curiosidad intelectual y su compromiso con la excelencia lo han llevado a participar activamente en proyectos de investigación, contribuyendo significativamente al desarrollo del conocimiento en su área. 
+ 
+Además de su capacidad técnica, christian se distingue por su ética de trabajo, su proactividad y su capacidad de trabajar en equipo. Su habilidad para comunicar ideas complejas de manera clara y efectiva lo convierte en un valioso recurso tanto en entornos académicos como en proyectos interdisciplinarios. 
+
+Estoy seguro de que Christian será un gran aporte para cualquier equipo o institución que tenga el privilegio de contar con su talento. Por ello, lo recomiendo ampliamente y quedo a dispoción para brindar cualquier información adicional que se requiera.
+
+\bigskip % Vertical whitespace
+
+Atentamente, 
+
+\vspace{50pt} % Vertical whitespace
+
+Lic. Juan Isaula 
+
+\end{document}
