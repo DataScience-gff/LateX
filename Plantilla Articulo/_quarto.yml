@@ -1,0 +1,50 @@
+title: "Meine Thesis"
+subtitle: "Untertitel"
+author: "Gordon Freeman"
+institute: "Black Mesa"
+date: now
+date-format: long
+lang: de
+
+latex-auto-mk: true
+bibliography: references.bib
+number-sections: true
+tbl-cap-location: bottom
+csl: _meta/apa.csl
+
+project:
+  output-dir: _output
+  render:
+    - main.qmd
+  post-render:
+    - _meta/purge_clutter_files.py
+format:
+    pdf:
+        # documentclass: scrreprt
+        classoption: nottoc
+        code-line-numbers: true
+        papersize: a4
+        geometry:
+            - left=30mm
+            - top=30mm
+            - right=25mm
+            - bottom=25mm
+        include-in-header:
+            text: |
+                \usepackage{tocbibind}
+                \usepackage[acronym,nonumberlist]{glossaries}
+                \usepackage{fvextra}
+
+                % Wrap long lines of code
+                \usepackage{fvextra}
+                \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+                \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
+
+                \input{document/02-acronyms.tex}
+                \makenoidxglossaries
+        fontsize: 11pt
+        mainfont: Arial
+        sansfont: Arial # Title font
+        linestretch: 1.5 # Line spacing
+execute:
+    enabled: false

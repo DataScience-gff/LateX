@@ -1,0 +1,27 @@
+\thispagestyle{empty}
+{{< pagebreak >}}
+
+\pagenumbering{roman}
+{{< include document/01-abstract.md >}}
+{{< pagebreak >}}
+
+\tableofcontents
+{{< pagebreak >}}
+
+\printnoidxglossary[title=Akronyme,type=acronym]
+\addcontentsline{toc}{section}{Akronyme}
+{{< pagebreak >}}
+
+\pagenumbering{arabic}
+{{< include document/10-einleitung.md >}}
+{{< include document/20-methoden.md >}}
+{{< include document/30-resultate.md >}}
+{{< include document/40-diskussion.md >}}
+{{< pagebreak >}}
+
+{{< include _meta/listoffigures.qmd >}}
+{{< include _meta/listoftables.qmd >}}
+
+{{< include _meta/references.qmd >}}
+
+{{< include _meta/selbstaendigkeitserklaerung.md >}}
