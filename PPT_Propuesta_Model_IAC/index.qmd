@@ -1,0 +1,89 @@
+---
+title: "Propuesta Proyección de Reserva IAC"
+format:
+    revealjs:
+        theme: [serif] # More themes at https://quarto.org/docs/presentations/revealjs/themes.html
+        slide-number: true
+        show-slide-number: speaker
+        chalkboard: true
+        code-line-numbers: false
+        preview-links: auto
+author: "Data Science"
+date: 19/05/2025 #Date in US format... MM/DD/YYYY
+date-format: "ddd Do MMMM YYYY"
+footer: "[https://www.ficohsa.com/](https://www.ficohsa.com/)"
+from: markdown+emoji
+---
+
+## Contexto y Justificación {style="font-size:20px"}
+
+El capital de reserva, conocido institucionalmente como IAC, es una de las variables criticas para la gestión financiera y de riesgos de la organización. Las técnicas utilizadas para proyectar las cuentas que componen el IAC se basan en diferencias simples o promedios, lo cual presenta importantes limitaciones, tales como la incapacidad para capturar estacionalidad, tendencias o eventos separados.
+
+Por ello, se propone implementar un modelo de proyección diaria y mensual del IAC, que combine la información disponible de cuentas con actualización diaria y mensual, mediante una metodología de modelado estadístico y reglas contables.
+
+### Objetivo General 
+
+Diseñar e implementar un modelo híbrido que permita estimar diariamente el capital de reserva (IAC), considerando tanto cuentas que se actualizan diariamente como aquellas que sólo se ajustan al cierre de mes, mediante la aplicación de modelos estadísticos apropiados para cada tipo de cuenta.
+
+## Metodología Propuesta  {style="font-size:20px"}
+
+#### Clasificación de cuentas
+
+Las cuentas involucradas en el cálculo del IAC se clasificarán en dos grupos según su frecuencia de actualización:
+
+-   **Cuentas con actualización diaria:** Se utilizarán diariamente o se proyectarán con modelos de series temporales (ARIMA, ETS, Prophet, etc).
+
+-   **Cuentas de ajuste mensual:** Se proyectarán mensualmente y su valor se mantendrá contasnte a lo largo del mes hasta el cierre contable.
+
+#### Modelado de las cuentas
+
+Cada cuenta se tratará de forma independiente, aplicando el modelo estadístico que mejor capture su comportamiento histórico y su relación con variables económicas o financieras.
+
+#### Cálculo del IAC diario  {style="font-size: 20px"}
+
+El IAC se calculará cada día aplicando su fórmula contable sobre:
+
+1.  Las cuentas de actualización diaria (reales o proyectadas).
+
+2.  Las cuentas de actualización mensual (proyección mensual).
+
+#### Ajuste al cierre 
+
+Una vez disponible la información real de las cuentas mensuales, se reemplazará la proyección y se recalculará el IAC para los días del mes en curso.
+
+## Ventajas del Modelo Propuesta {style="font-size: 20px"}
+
+-   Estimación diaria del IAC con mayor precisión.
+
+-   Captura de patrones reales como estacionalidades o tendencias.
+
+-   Capacidad de simulación para escenarios futuros.
+
+-   Mayor trazabilidad y robustez metodólogica.
+
+-   Mejor soporte para la toma de decisiones ejecutivas.
+
+####  ¿Qué propone este modelo?
+
+Un modelo estadísticó dinámico, basado en:
+
+1.  **Series temporales (ARIMA, ETS, Prophet)** para identificar patrones reales en el tiempo.
+
+2.  **Interpolación o regresión para cuentas mensuales**, de modo que se construya una curva realista y consistente día a día.
+
+3.  **Escenarios de simulación, donde puedes preguntarte:** ¿*Qué pasaría si en el cierre de este mes hay un ajuste 15% más alto en provisiones?*
+
+Este enfoque no solo **mejora la precesión**, sino que también le da a la gerencia **más control y visibilidad anticipada**, sin esperar a los cierres contables.
+
+## Limitaciones de orientarnos a un enfoque  en diferencias y promedios simples {style="font-size:20px"}
+
+La estimación diaria de las cuentas del IAC que se basan en diferencias y promedios simples, presentan importantes limitaciones:
+
+| Enfoque diferencias y promedios simples | Explicación |
+|------------------------------------|------------------------------------|
+| No capta estacionalidad | Las cuentas pueden tener patrones semanales, quincenales o de fin de mes que el promedio ignora completamente |
+| Ignora tendencias estructurales | Si hay una tendencia creciente o decreciente, el promedio *"aplasta"* la señal. |
+| No considera variables externas | Factores como tasas de interés, moras, comportamiento de clientes o decisiones estratégicas no se incorporan. |
+| Puede ser muy volátil o muy plano | Las diferencias pueden sobrerreaccionar ante un valor atípico, o los promedios pueden subestimar un cambio relevante. |
+| Cero capacidad de simulación o predicción confiable | No hay forma de justificar ni defender una proyección basada en un *"promedio simple"*  en una mesa ejecutiva. |
+|  |  |
