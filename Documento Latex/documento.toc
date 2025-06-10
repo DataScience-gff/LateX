@@ -1,0 +1,17 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Introducción y Propósito}{2}{section.1}%
+\contentsline {section}{\numberline {2}Alcance}{2}{section.2}%
+\contentsline {section}{\numberline {3}Roles y Responsabilidades}{2}{section.3}%
+\contentsline {section}{\numberline {4}Ciclo de Vida del Modelo}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}1. Identificación e Inventario}{3}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}2. Desarrollo}{3}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}3. Validación Independiente}{3}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}4. Implementación}{3}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}5. Monitoreo Continuo}{3}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}6. Retiro o Actualización}{3}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Criterios de Validación y Monitoreo}{3}{section.5}%
+\contentsline {section}{\numberline {6}Documentación y Trazabilidad}{4}{section.6}%
+\contentsline {section}{\numberline {7}Gestión de Riesgos del Modelo}{4}{section.7}%
+\contentsline {section}{\numberline {8}Requerimientos Regulatorios y Auditoría}{4}{section.8}%
+\contentsline {section}{\numberline {9}Tecnología y Herramientas Recomendadas}{4}{section.9}%
+\contentsline {section}{\numberline {10}Cronograma de Implementación}{5}{section.10}%

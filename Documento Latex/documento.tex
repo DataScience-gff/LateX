@@ -1,0 +1,198 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\geometry{margin=1in}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Gobernanza de Modelos}
+\lhead{Grupo Financiero}
+\cfoot{\thepage}
+
+\title{\textbf{Gobernanza de Modelos del Área de Riesgos}}
+\author{Grupo Financiero - Subgerencia de Ciencia de Datos}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Introducción y Propósito}
+La presente política establece el marco de \textbf{Gobernanza de Modelos} para el Área de Riesgos del Grupo Financiero. Su objetivo es definir principios, procesos y responsabilidades que aseguren que los modelos sean:
+\begin{itemize}
+  \item Conceptualmente sólidos,
+  \item Validados rigurosamente,
+  \item Monitoreados durante su ciclo de vida,
+  \item Usados apropiadamente para la toma de decisiones,
+  \item Transparentes y auditables.
+\end{itemize}
+
+\section{Alcance}
+Esta política aplica a todos los modelos utilizados en la gestión de riesgos, incluyendo pero no limitados a:
+\begin{itemize}
+  \item Modelos estadísticos tradicionales (regresión, scoring, segmentación)
+  \item Modelos regulatorios (PD, LGD, EAD, IFRS 9)
+  \item Modelos de Machine Learning (Random Forest, XGBoost, etc.)
+  \item Modelos de Deep Learning (Redes Neuronales, LSTM, etc.)
+  \item Modelos híbridos y de simulación económica
+\end{itemize}
+
+\section{Roles y Responsabilidades}
+\begin{itemize}
+  \item \textbf{Primera Línea (Desarrolladores / Usuarios)}: Desarrollo, documentación, pruebas y uso.
+  \item \textbf{Segunda Línea (Gobernanza de Modelos)}: Validación independiente, inventario, monitoreo, estándares.
+  \item \textbf{Tercera Línea (Auditoría Interna)}: Verificación del cumplimiento del marco de gobernanza.
+  \item \textbf{Comité de Modelos}: Instancia de aprobación, revisión de excepciones y seguimiento de riesgos.
+\end{itemize}
+
+\section{Ciclo de Vida del Modelo}
+\subsection{1. Identificación e Inventario}
+Todo modelo debe ser registrado con información mínima: propósito, responsables, tipo de modelo, criticidad, frecuencia de uso y variables clave.
+
+\subsection{2. Desarrollo}
+Debe seguir buenas prácticas: selección de variables, definición de datasets, replicabilidad, separación de datos (entrenamiento/prueba), control de sesgos y justificación del algoritmo.
+
+\subsection{3. Validación Independiente}
+Revisión técnica rigurosa por una unidad distinta al desarrollador. Incluye:
+\begin{itemize}
+  \item Pruebas de robustez y sensibilidad,
+  \item Validación estadística (AUC, MAPE, RMSE, etc.),
+  \item Evaluación de overfitting,
+  \item Transparencia y explicabilidad (SHAP, LIME).
+\end{itemize}
+
+\subsection{4. Implementación}
+Asegurar pruebas UAT, ambiente controlado, versionamiento y validación final antes de producción. Para modelos ML/DL, asegurar pipeline de inferencia.
+
+\subsection{5. Monitoreo Continuo}
+\begin{itemize}
+  \item Verificación de rendimiento (deterioro, drift, recalibración).
+  \item Indicadores clave: pérdida de precisión, uso inapropiado, cambio de datos.
+\end{itemize}
+
+\subsection{6. Retiro o Actualización}
+Debe haber criterios objetivos para desactivar o actualizar modelos obsoletos.
+
+\section{Criterios de Validación y Monitoreo}
+\begin{itemize}
+  \item \textbf{Modelos Supervisados}: métricas de clasificación o regresión.
+  \item \textbf{Modelos No Supervisados}: validación de estabilidad de clusters.
+  \item \textbf{Modelos DL}: revisión de arquitectura, número de capas, tiempos de entrenamiento, curvas de pérdida, validación cruzada.
+\end{itemize}
+
+\section{Documentación y Trazabilidad}
+Cada modelo debe contar con documentación obligatoria:
+\begin{enumerate}
+  \item Descripción del modelo y objetivo.
+  \item Dataset utilizado y origen de los datos.
+  \item Código fuente con control de versiones.
+  \item Resultados de validación y backtesting.
+  \item Registro de aprobaciones y uso en decisiones.
+\end{enumerate}
+
+\section{Gestión de Riesgos del Modelo}
+\begin{itemize}
+  \item Identificación de riesgos inherentes al tipo de modelo.
+  \item Planes de contingencia y alertas tempranas.
+  \item Tolerancias definidas para métricas críticas.
+\end{itemize}
+
+\section{Requerimientos Regulatorios y Auditoría}
+\begin{itemize}
+  \item Cumplimiento con normativas locales e internacionales (ej. IFRS 9, Basilea).
+  \item Trazabilidad ante requerimientos de supervisores o auditores.
+  \item Archivos históricos de decisiones, versiones y resultados.
+\end{itemize}
+
+\section{Tecnología y Herramientas Recomendadas}
+Para asegurar eficiencia, trazabilidad y escalabilidad en la gestión de modelos, se recomienda el uso de las siguientes herramientas:
+\begin{itemize}
+  \item \textbf{Versionamiento y colaboración}: Git, GitLab, Bitbucket
+  \item \textbf{Gestión de entornos y dependencias}: Docker, Conda
+  \item \textbf{Automatización y orquestación}: Airflow, MLflow, Prefect
+  \item \textbf{Monitoreo de desempeño}: Evidently AI, Prometheus + Grafana, Power BI
+  \item \textbf{Almacenamiento seguro}: Data Lake institucional, Azure Blob Storage
+  \item \textbf{Servidores de producción}: Azure Machine Learning, Amazon SageMaker, Kubernetes
+\end{itemize}
+
+\section{Cronograma de Implementación}
+\begin{itemize}
+  \item \textbf{Mes 1–2}: Diagnóstico del estado actual, consolidación de inventario de modelos
+  \item \textbf{Mes 3–4}: Definición de políticas y formalización de roles/comités
+  \item \textbf{Mes 5–6}: Diseño e implementación del flujo de ciclo de vida del modelo
+  \item \textbf{Mes 7–8}: Capacitación de equipos, implementación de herramientas
+  \item \textbf{Mes 9 en adelante}: Monitoreo, auditorías internas, mejora continua
+\end{itemize}
+
+\newpage
+\appendix
+\section*{Anexos}
+
+\subsection*{Anexo A: Ejemplos de Métricas de Performance por Tipo de Modelo}
+\begin{itemize}
+  \item Clasificación: Accuracy, Precision, Recall, F1 Score, AUC-ROC
+  \item Regresión: RMSE, MAE, R\textsuperscript{2}, MAPE
+  \item Modelos Probabilísticos: LogLoss, Brier Score
+  \item Modelos No Supervisados: Silhouette Score, Calinski-Harabasz Index
+\end{itemize}
+
+\subsection*{Anexo B: Plantilla de Inventario de Modelos}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{ID Modelo} & \textbf{Nombre} & \textbf{Área} & \textbf{Tipo} & \textbf{Crítico (Sí/No)} \\
+\hline
+001 & PD Préstamos & Riesgo Crédito & ML (XGBoost) & Sí \\
+\hline
+002 & Clustering Clientes & Segmentación & K-Means & No \\
+\hline
+\end{tabular}
+
+\subsection*{Anexo C: Formato de Ficha Técnica del Modelo}
+\begin{itemize}
+  \item Nombre del Modelo: 
+  \item Descripción: 
+  \item Responsable del Desarrollo: 
+  \item Fecha de Implementación: 
+  \item Versión Actual: 
+  \item Dataset Utilizado: 
+  \item Algoritmo o Técnica Aplicada: 
+  \item Métricas de Desempeño: 
+  \item Resultados de Validación: 
+  \item Frecuencia de Monitoreo: 
+  \item Fecha Última Revisión: 
+\end{itemize}
+
+\subsection*{Anexo D: Ejemplo de Ficha Técnica - Modelo de PD con XGBoost}
+\begin{itemize}
+  \item \textbf{Nombre del Modelo:} Modelo de Probabilidad de Incumplimiento (PD) para Tarjetas de Crédito
+  \item \textbf{Descripción:} Modelo supervisado que estima la probabilidad de que un cliente entre en mora de 90+ días en los próximos 12 meses, utilizando datos transaccionales, demográficos y macroeconómicos.
+  \item \textbf{Responsable del Desarrollo:} Equipo de Ciencia de Datos - Subgerencia de Riesgo Crediticio
+  \item \textbf{Fecha de Implementación:} 15 de marzo de 2024
+  \item \textbf{Versión Actual:} v1.3
+  \item \textbf{Dataset Utilizado:} Transacciones históricas 2019–2023, Buró de crédito, Segmentación geográfica
+  \item \textbf{Algoritmo o Técnica Aplicada:} XGBoost (extreme gradient boosting) con validación cruzada estratificada 5-fold
+  \item \textbf{Métricas de Desempeño:}
+    \begin{itemize}
+        \item AUC: 0.88
+        \item Accuracy: 82.4\%
+        \item Gini: 0.76
+        \item MAPE (validación): 6.8\%
+    \end{itemize}
+  \item \textbf{Resultados de Validación:} Validado por el área de Riesgo Modelos el 20 de marzo de 2024. Se detectó leve sensibilidad a la variable macroeconómica IPC, controlada con escalamiento mensual.
+  \item \textbf{Frecuencia de Monitoreo:} Mensual (monitoreo de drift y desempeño)
+  \item \textbf{Fecha Última Revisión:} 5 de junio de 2025
+\end{itemize}
+
+
+\end{document}
+
+
