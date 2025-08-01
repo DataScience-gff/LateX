@@ -198,6 +198,38 @@ Las métricas de desempeño son indicadores utilizados para evaluar la calidad, 
 \end{itemize}
 
 La selección de métricas debe estar alineada con el objetivo del modelo, el tipo de datos y el contexto de negocio o regulatorio. No existe una métrica universalmente superior: modelos de clasificación, regresión, riesgos financieros o segmentación requieren evaluaciones distintas. Es fundamental que las métricas sean validadas conjuntamente entre áreas técnicas y las áreas usuarios del modelo, asegurando su relevancia y utilidad en la toma de decisiones. Adicionalmente, se recomienda documentar claramente las métricas seleccionadas en la ficha técnica del modelo y en reporte de validación. 
+
+% ---------------------------------- Métricas  aceptables de desempeño --------------------------------------------------------
+\section{Requerimientos Mínimos de Aceptación de Métricas}
+{\tiny
+\begin{longtable}{>{\bfseries}p{3.5cm} p{5cm} p{4.6cm}}
+\toprule
+\rowcolor{ficoblue}
+\color{white}\textbf{Métrica}  &\color{white}\textbf{Mínimo recomendado}& \color{white}\textbf{Referencias} \\
+ \midrule
+Precisión (Accuracy)  & $\geq$ 70\% (en datos balanceados)  & Hand \& Till (2001), Scikit-learn \\
+\addlinespace
+Sensibilidad (Recall)  & $\geq$ 60–70\%                                   & Ajustable según costo del falso negativo \\
+\addlinespace
+Especificidad              &   $\geq$ 70\%                                       & Aplica a clasificación negativa \\
+\addlinespace
+F1 Score                     &   $\geq$ 0.60 (desbalanceado), $\geq$ 0.70 (balanceado) & Hand \& Till (2001), BIS \\
+\addlinespace
+AUC-ROC                  &  $\geq$ 0.70 (aceptable), $\geq$ 0.80 (bueno), $\geq$ 0.90 (excelente)  & Hand \& Till (2001), BIS \\
+\addlinespace
+RMSE / MAE / MAPE  & MAPE $<$ 10\%; RMSE y MAE lo más bajo posible & Hyndman \& Athanasopoulos (2018) \\ 
+\addlinespace
+KS (Kolmogorov–Smirnov)       & $\geq$ 30 & SAS, Moody’s, validadores expertos \\
+\addlinespace
+VaR (Backtesting)             & $\leq$ 5\% de excepciones para nivel de confianza del 95\%  &  Basel II, III  \\
+\addlinespace
+Expected Shortfall (ES)   & No tiene umbral fijo. Debe ser coherente con el apetito al riesgo &  BIS, RiskMetrics  \\
+\addlinespace
+Backtesting     &  Al menos un ciclo de evaluación fuera de muestra. Frecuencia trimestral o anual según criticidad & ECB, OCC, SR 11-7 \\
+\addlinespace
+\bottomrule
+\end{longtable}
+}
 % ---------------------------------------------------- PRINCIPIOS RECTORES ---------------------------------------------------- %
 \section{Principios Rectores}
 \begin{itemize}
@@ -342,7 +374,7 @@ Para modelos complejos, como aquellos basados en algoritmos de machine learning 
 \end{itemize}
 
 Toda está información expuesta en esta sección será solicitada por los validadores independientes y constituye un prerrequisito obligatorio para avanzar hacia las fases de validación y puesta en producción. 
-\newpage
+
 % ---------------------------------------------------- ANEXO A ---------------------------------------------------- %
 \section{Anexo A: Ficha Técnica del Modelo}
 %\rowcolors{1}{ficolight}{white}
