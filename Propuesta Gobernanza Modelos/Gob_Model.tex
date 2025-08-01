@@ -56,7 +56,7 @@ color=black, % Fondo a usar para transparencia
 opacity=1,    % Nivel de Transparencia
 angle=0,       % En caso de querer rotacion
 contents={%
-  \includegraphics[width=\paperwidth,height=\paperheight]{C:/Users/HN32885/Documents/2025/LateX/Propuesta Gobernanza Modelos/Background.png}
+  \includegraphics[width=\paperwidth,height=\paperheight]{/Users/juanisaulamejia/Documents/2025/FICOHSA/Propuesta Gobernanza Modelos/Background.png}
   }%
 }
 
@@ -143,7 +143,9 @@ bottom color=blue!50!black,draw=black]%
 % ---------------------------------------------------- INTRODUCCIÓN ---------------------------------------------------- %
 \section{Introducción y Propósito}
 
-El presente documento establece el \textbf{Marco de Gobernanza de Modelos} del Área de Riesgos del Grupo Financiero Ficohsa, con el objetivo de asegurar que todos los modelos utilizados en procesos de toma de decisiones críticas (riesgo, provisiones, rentabilidad, capital económico, cumplimiento regulatorio, colocaciones en diferentes productos, alertas tempranas, cobros, etc) se desarrollen, validen, mantengan y usen de forma responsable, transparente y conforme a estándares internacionales (SR 11-7, IFRS 9, Basilea III) y lineamientos regulatorios de la CNBS. 
+El presente documento establece el \textbf{Marco de Gobernanza de Modelos} del Área de Riesgos del Grupo Financiero Ficohsa, con el objetivo de asegurar que todos los modelos utilizados en procesos de toma de decisiones críticas (riesgo, provisiones, rentabilidad, capital económico, cumplimiento regulatorio, colocaciones en diferentes productos, alertas tempranas, cobros, etc) se desarrollen, validen, mantengan y usen de forma responsable, transparente y conforme a estándares internacionales (SR 11-7, IFRS 9, Basilea III) y lineamientos regulatorios de la CNBS. \\
+
+Asimismo, este marco busca fortalecer la trazabilidad, robustez técnica, transparencia y cumplimiento regulatorio de los modelos utilizados en el Grupo Financiero. Su implementación facilitará una toma de decisiones más precisa, mitigará riesgos operativos, y permitirá alinear los modelos con las mejores prácticas de gobernanza a nivel internacional.
 
 % ---------------------------------------------------- ALCANCE ---------------------------------------------------- %
 \section{Alcance} 
@@ -162,7 +164,24 @@ Este marco aplica a todos los modelos desarrollados o utilizados por las áreas 
 % ---------------------------------------------------- DEFINICIONES  ---------------------------------------------------- %
 \section{Definiciones}
 \subsection{¿Qué es un modelo?}
-Un modelo es un conjunto de métodos, algoritmos, reglas o sistemas que procesan datos para estimar, predecir o clasificar resultados asociados a variables de interés para la toma de decisiones. Incluye desde modelos estadísticos tradicionales, hasta algoritmos de aprendizaje automático (Machine Learning) o redes neuronales (Deep Learning) aplicados a la gestión de riesgos.  
+Un modelo es un conjunto de métodos, algoritmos, reglas o sistemas que procesan datos para estimar, predecir o clasificar resultados asociados a variables de interés para la toma de decisiones. Incluye desde modelos estadísticos tradicionales, hasta algoritmos de aprendizaje automático (Machine Learning) o redes neuronales (Deep Learning) aplicados a la gestión de riesgos.  Podemos clasificar los modelos como:
+
+\begin{itemize}
+\item \textbf{Modelo Regulatorio:} Modelo utilizado para cumplir con disposiciones normativas o regulatorias, como los relacionados con provisiones bajo IFRS 9 o requerimientos de capital bajo Basilea III.\\
+
+\item \textbf{Modelo Interno:} Modelo desarrollado con fines internos de gestión de riesgos o apoyo a decisiones estratégicas, sin requerimientos regulatorios directos.\\
+
+\item \textbf{Reentrenamiento:} Proceso mediante el cual se actualiza un modelo con nuevos datos, manteniendo su estructura original, con el fin de preservar su desempeño.\\
+
+\item \textbf{Recalibración:} Ajuste de parámetros o coeficientes del modelo sin modificar su estructura o variables.
+
+\item \textbf{Drift de datos:} Cambio en la distribución de los datos de entrada o en la relación entre variables, que puede afectar el desempeño del modelo.
+
+\item \textbf{Fairness (Equidad):} Principio que busca garantizar que el modelo no genere sesgos sistemáticos contra grupos protegidos (por ejemplo, por género, edad o etnia).
+
+\item \textbf{Overfitting:} Fenómeno donde el modelo se ajusta excesivamente a los datos de entrenamiento, perdiendo capacidad de generalización.
+\end{itemize}
+
 \subsection{¿Qué son las métricas de desempeño?}
 Las métricas de desempeño son indicadores utilizados para evaluar la calidad, precisión y utilidad de un modelo. Las métricas varían según el tipo de modelo, pero comúnmente incluyen: 
 \begin{itemize}
@@ -188,6 +207,8 @@ La selección de métricas debe estar alineada con el objetivo del modelo, el ti
 \item Ciclo de vida controlado desde el desarrollo hasta el retiro. 
 \item Monitoreo continuo del desempeño y ajuste frende a desviaciones. 
 \end{itemize}
+
+\textbf{Auditabilidad y explicabilidad:} Todo modelo debe ser trazable, interpretable y reproducible por terceros, incluyendo sus decisiones automatizadas, variables clave y lógica de funcionamiento. Esto es especialmente crítico en modelos complejos como redes neuronales, Machine Learning, Modelos de Lenguaje de Procesamiento Natural. 
 
 % ---------------------------------------------------- ROLES Y RESPONSABILIDADES ---------------------------------------------------- %
 \section{Roles y Responsabilidades}
@@ -275,7 +296,7 @@ Validador Independiente  & Revisa técnica, estadística y regulatoriamente (en 
 
 \section{Requerimientos Mínimos de Documentación Técnica del Modelo}
 
-Todo modelo desarrollado dentro del Grupo Financiero deberá contar con una documentación mínima estandarizada, la cual es responsabilidad del área o persona que lidera su construcción. Esta documentación es indespensable para asegurar la transparencia, validación, trazabilidad y preparación para su posterior puesta en producción. 
+Todo modelo desarrollado dentro del Grupo Financiero deberá contar con una documentación mínima estandarizada, la cual es responsabilidad del área o persona que lidera su construcción. Esta documentación es indespensable para asegurar la transparencia, validación, trazabilidad y preparación para su posterior puesta en producción. \\
 
 Los elementos mínimos que debe contener dicha documentación son los siguientes: 
 
@@ -309,6 +330,10 @@ Debe incluir:
 \item Análisis de sensibilidad o estabilidad
 \item Evidencia de no sobreajuste
 \end{itemize}
+
+\subsection{Explicabilidad y Sesgo}
+
+Para modelos complejos, como aquellos basados en algoritmos de machine learning o deep learning, el desarrollador deberá incluir una evaluación de explicabilidad utilizando herramientas como SHAP, LIME u otras técnicas equivalentes. Asimismo, deberá documentarse cualquier análisis de sesgo potencial hacia grupos vulnerables y, si aplica, las acciones tomadas para mitigar dichos riesgos.\\
 
 \subsection{Evidencia de Validación Independiente}
 
@@ -470,4 +495,30 @@ Documentación Complementaria & README técnico, manual usuario, validación.pdf
 \addlinespace 
 \bottomrule
 \end{longtable}
+
+\newpage 
+
+\section*{12. Referencias Bibliográficas y Técnicas}
+
+\begin{itemize}
+  \item Board of Governors of the Federal Reserve System. (2011). \textit{SR 11-7: Guidance on Model Risk Management}. Disponible en: \url{https://www.federalreserve.gov}
+  
+  \item Bank for International Settlements (BIS). (2006--2019). \textit{Basel II y III Frameworks: International Convergence of Capital Measurement and Capital Standards}. BIS Publications.
+  
+  \item Hand, D. J., \& Till, R. J. (2001). \textit{A Simple Generalisation of the Area Under the ROC Curve for Multiple Class Classification Problems}. Machine Learning, 45(2), 171--186.
+  
+  \item Hyndman, R. J., \& Athanasopoulos, G. (2018). \textit{Forecasting: Principles and Practice} (2nd ed.). OTexts. Disponible en: \url{https://otexts.com/fpp2/}
+  
+  \item SAS Institute Inc. (2016). \textit{Credit Scoring for Risk Managers: The Handbook for Lenders}. Cary, NC.
+  
+  \item Moody’s Analytics. (2018). \textit{Best Practices in Credit Scorecard Development and Validation}. Research Brief.
+  
+  \item European Central Bank. (2017). \textit{Guidance on the use of models in the Internal Ratings-Based Approach}. ECB Banking Supervision.
+  
+  \item Office of the Comptroller of the Currency (OCC). (2021). \textit{Model Risk Management: OCC Bulletin 2021-41}.
+  
+  \item Scikit-learn Developers. (2023). \textit{Model Evaluation Metrics}. Documentación oficial. Disponible en: \url{https://scikit-learn.org}
+  
+\end{itemize}
+
 \end{document}
