@@ -1,0 +1,25 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Introducción y Propósito}{3}{section.1}%
+\contentsline {section}{\numberline {2}Alcance}{3}{section.2}%
+\contentsline {section}{\numberline {3}Definiciones}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}¿Qué es un modelo?}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}¿Qué son las métricas de desempeño?}{4}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Principios Rectores}{5}{section.4}%
+\contentsline {section}{\numberline {5}Roles y Responsabilidades}{5}{section.5}%
+\contentsline {section}{\numberline {6}Ciclo de Vida del Modelo}{5}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Justificación}{5}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Desarrollo y Documentación Técnica}{5}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Validación Independiente}{6}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Aprobación y Registro}{6}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Implementación y Monitoreo}{7}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Recalibración y Retiro}{7}{subsection.6.6}%
+\contentsline {section}{\numberline {7}Requerimientos Mínimos de Documentación Técnica del Modelo}{7}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Ficha Técnica del Modelo}{7}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Descripción del Dataset}{7}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Fundamentos Metodológico y Justificación}{8}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Evaluación de Desempeño}{8}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Evidencia de Validación Independiente}{8}{subsection.7.5}%
+\contentsline {section}{\numberline {8}Anexo A: Ficha Técnica del Modelo}{9}{section.8}%
+\contentsline {section}{\numberline {9}Anexo B: Matriz de Roles y Responsabilidades}{10}{section.9}%
+\contentsline {section}{\numberline {10}Anexo C: Criterios de Validación Técnica}{10}{section.10}%
+\contentsline {section}{\numberline {11}Ejemplo - Ficha Técnica del Modelo}{11}{section.11}%

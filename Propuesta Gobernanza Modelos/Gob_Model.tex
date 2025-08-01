@@ -1,0 +1,473 @@
+
+
+\documentclass[11pt,oneside]{article}%
+
+% ----------------------------------   Paquetes a Utilizar   --------------------------------------------
+\usepackage[myheadings]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage[pages=all]{background}
+\usepackage{tikz}
+\usepackage{graphicx}
+ \usepackage{epstopdf}
+\usepackage{lmodern}
+ \usepackage{epsfig}
+ \usepackage{makecell}
+ \usepackage{wasysym}
+ \usepackage{latexsym}
+\usepackage{relsize}
+\usepackage{booktabs}
+%\usepackage[table]{xcolor}
+\usepackage[table, xcdraw]{xcolor}
+\usepackage{longtable}
+\usepackage{array}
+\renewcommand{\arraystretch}{0.6}
+\definecolor{ficoblue}{HTML}{003865}
+\definecolor{ficolight}{HTML}{E6EEF6}
+
+ \usepackage[pdftex] {pict2e} 
+ \usetikzlibrary{decorations.pathmorphing}
+\usepackage{caption, array, pstricks, booktabs}
+%Paquete para hipervinculos
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[top=3cm, bottom=2cm, left=3cm,right=3cm]{geometry}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+% -----------------------
+ \epstopdfDeclareGraphicsRule{.pdf}{png}{.png}{convert #1 \OutputFile}
+  \DeclareGraphicsExtensions{.png,.pdf}
+% ------------------------------------------    Preambulo     ----------------------------------------------
+
+% Imagen de formato de fondo  
+
+\backgroundsetup{
+scale=1,       % Escala de la imagen
+color=black, % Fondo a usar para transparencia
+opacity=1,    % Nivel de Transparencia
+angle=0,       % En caso de querer rotacion
+contents={%
+  \includegraphics[width=\paperwidth,height=\paperheight]{C:/Users/HN32885/Documents/2025/LateX/Propuesta Gobernanza Modelos/Background.png}
+  }%
+}
+
+
+
+% Formato de emcabezado y pie de pagina.
+\pagestyle{plain} 
+
+%Para qué los subtítulos aparezcan en español
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{sectsty}
+\usepackage{url, lipsum}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{hhline}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{diagbox}
+\usepackage{slashbox,pict2e}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\onehalfspacing
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+
+% entorno tikz
+\usepackage{tikz}
+\usetikzlibrary{calc,fit,shadows,arrows,positioning}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+% Data Table
+\newsavebox{\dataTableContent} % Caja
+\newenvironment{dataTable}[1] % Inicio nuevo entorno
+{%
+\begin{lrbox}{\dataTableContent}%
+\begin{tabular}{#1}}%
+{%
+\end{tabular}
+\end{lrbox}
+\begin{tikzpicture}
+\node [inner xsep=0pt] (tbl){\usebox{\dataTableContent}};
+\begin{pgfonlayer}{background}
+% tabla
+\draw[rounded corners=1pt,top color=white!1,bottom color=white!30,
+draw=gray](tbl.north east) rectangle(tbl.south west);
+% línea superior
+\draw[rounded corners=1pt,top color=blue!10!blue,
+bottom color=blue!50!black,draw=black]%
+($(tbl.north west)$) rectangle
+($(tbl.north east)-(0,0\baselineskip)$);
+% línea inferior
+\draw[rounded corners=0.25pt,fill=gray,draw=black]%
+(tbl.south west) rectangle($(tbl.south east)+(0,0.05)$);
+\end{pgfonlayer}
+\end{tikzpicture}}
+\usepackage{multirow} 
+
+
+
+% ----------------------------------------- INICIO DEL DOCUMENTO  --------------------------------
+
+\begin{document}
+\title{ \normalsize Grupo Financiero Ficohsa \\
+		Vol 1.0
+		\\ [2.0cm]
+		\HRule{0.5pt} \\
+		\LARGE \textbf{Gobernanza de Modelos - Área de Riesgos} %para que quede encerrado en las lineas
+		\HRule{2pt} \\ [0.1cm]
+		\normalsize  \vspace*{5\baselineskip}}
+
+\date{Junio 2025}
+
+\author{Ciencia de Datos - Riesgos}
+%se debe incluir el comando \maketitle para hacer 
+\maketitle
+
+%Para hacer el indice solo es necesario agregar 
+\newpage
+\tableofcontents
+\newpage
+
+% ---------------------------------------------------- INTRODUCCIÓN ---------------------------------------------------- %
+\section{Introducción y Propósito}
+
+El presente documento establece el \textbf{Marco de Gobernanza de Modelos} del Área de Riesgos del Grupo Financiero Ficohsa, con el objetivo de asegurar que todos los modelos utilizados en procesos de toma de decisiones críticas (riesgo, provisiones, rentabilidad, capital económico, cumplimiento regulatorio, colocaciones en diferentes productos, alertas tempranas, cobros, etc) se desarrollen, validen, mantengan y usen de forma responsable, transparente y conforme a estándares internacionales (SR 11-7, IFRS 9, Basilea III) y lineamientos regulatorios de la CNBS. 
+
+% ---------------------------------------------------- ALCANCE ---------------------------------------------------- %
+\section{Alcance} 
+
+Este marco aplica a todos los modelos desarrollados o utilizados por las áreas de riesgos (Gestión integral de riesgos de negocio, Riesgos financieros, Riesgo de crédito bancas comerciales, Riesgo de crédito banca consumo, Riesgos no financieros y Riesgos ambiental y social) incluyendo: 
+\begin{itemize}
+\item Modelos de scoring y rating. 
+\item Modelos de probabilidad de incumplimiento  (PD), Pérdida dado incumplimiento (LGD), Exposición (EAD). 
+\item Modelos de provisiones IFRS 9.
+\item Modelos de estrés macroeconómico.
+\item Modelos de apetito de riesgo y optimización del portafolio. 
+\item Modelos Machine Learning / IA. 
+\item Modelos de liquidez.
+\end{itemize} 
+
+% ---------------------------------------------------- DEFINICIONES  ---------------------------------------------------- %
+\section{Definiciones}
+\subsection{¿Qué es un modelo?}
+Un modelo es un conjunto de métodos, algoritmos, reglas o sistemas que procesan datos para estimar, predecir o clasificar resultados asociados a variables de interés para la toma de decisiones. Incluye desde modelos estadísticos tradicionales, hasta algoritmos de aprendizaje automático (Machine Learning) o redes neuronales (Deep Learning) aplicados a la gestión de riesgos.  
+\subsection{¿Qué son las métricas de desempeño?}
+Las métricas de desempeño son indicadores utilizados para evaluar la calidad, precisión y utilidad de un modelo. Las métricas varían según el tipo de modelo, pero comúnmente incluyen: 
+\begin{itemize}
+\item \textbf{Precisión (Accuracy):} Proporción de predicciones correctas sobre el total de observaciones. 
+\item \textbf{Sensibilidad (Recall o True Positive Rate):} Capacidad del modelo para identificar correctamente los casos positivos. 
+\item \textbf{Especificidad:}  Capacidad del modelo para identificar correctamente los casos negativos. 
+\item \textbf{F1 Score:} Media armónica entre precisión y sensibilidad, útil par datasets desbalanceados. 
+\item \textbf{AUC-ROC:} Área bajo la curva ROC, mide la capacidad del modelo para discriminar entre clases. 
+\item \textbf{RMSE/MAE/MAPE:} Métricas de error comúnmente utilizadas en modelos de regresión. 
+\item \textbf{KS:} Mide la máxima diferencia entre las distribuciones acumuladas de eventos y no eventos; comúnmente utilizado en modelos de riesgo de credito. 
+\item \textbf{VaR:} Para modelos financieros, representa la pérdida máxima esperada con un nivel de confianza dado en un horizonte temporal determinado. 
+\item \textbf{Expected Shortfall (ES):} Promedio de pérdidas en los casos en que se supera el VaR, relevante para evaluación de cola de pérdida. 
+\item \textbf{Backtesting:} Evaluación ex post del rendimiento del modelo, comparando predicciones con resultados reales, especialmente útil en modelos financieros y regulatorios. 
+\end{itemize}
+
+La selección de métricas debe estar alineada con el objetivo del modelo, el tipo de datos y el contexto de negocio o regulatorio. No existe una métrica universalmente superior: modelos de clasificación, regresión, riesgos financieros o segmentación requieren evaluaciones distintas. Es fundamental que las métricas sean validadas conjuntamente entre áreas técnicas y las áreas usuarios del modelo, asegurando su relevancia y utilidad en la toma de decisiones. Adicionalmente, se recomienda documentar claramente las métricas seleccionadas en la ficha técnica del modelo y en reporte de validación. 
+% ---------------------------------------------------- PRINCIPIOS RECTORES ---------------------------------------------------- %
+\section{Principios Rectores}
+\begin{itemize}
+\item Independencia entre desarrollo y validación. 
+\item Trazabilidad y reproducibilidad de cada modelo. 
+\item Documentación técnica y de negocio completa. 
+\item Ciclo de vida controlado desde el desarrollo hasta el retiro. 
+\item Monitoreo continuo del desempeño y ajuste frende a desviaciones. 
+\end{itemize}
+
+% ---------------------------------------------------- ROLES Y RESPONSABILIDADES ---------------------------------------------------- %
+\section{Roles y Responsabilidades}
+
+%\rowcolors{1}{ficolight}{white}
+\begin{longtable}{>{\bfseries}p{5cm}  p{10cm}}
+\toprule
+\rowcolor{ficoblue}
+\color{white}\textbf{Rol}  & \color{white}\textbf{Funciones Principales} \\
+ \midrule
+Owner del Modelo           & Define el uso y objetivo, interpreta resultados, asegura el alineamiento con el negocio y solicita validación periódica. \\
+\addlinespace
+Desarrollador                  & Diseña, entrena, documenta todo lo relacionado con el modelo (supuestos, filtros, analisis de caracterísitica, etc)y versiona el modelo. Garantiza calidad técnica y replicabilidad.\\
+\addlinespace
+Validador Independiente  & Revisa técnica, estadística y regulatoriamente (en caso que aplique) el modelo antes de su aprobación. \\ 
+\addlinespace
+\bottomrule
+\end{longtable}
+% ---------------------------------------------------- CICLO DE VIDA DEL MODELO ---------------------------------------------------- %
+\section{Ciclo de Vida del Modelo}
+
+% justificación -------------------------
+\subsection{Justificación}
+\begin{itemize}
+\item \textbf{Identificación de la necesidad:} Se levanta una necesidad específica desde un área del negocio, riesgos u otra unidad funcional, lo cual considera que un modelo puede apoyar la toma de decisiones estratégicas, operativas o regulatorias. Esta necesidad debe estar claramente vinculada con un problema o meta cuantificable. 
+\item \textbf{Documentación del objetivo:} Se debe registrar formalmente el propósito del modelo, incluyendo qué se espera estimar, clasificar o predecir, y cómo esta salida contribuye al objetivo institucional. Se recomienda incluir un resumen ejecutivo que justifique la creación del modelo, así como los criterios que definiran su éxito. 
+\end{itemize}
+
+% Documentación Técnica -------------------------
+\subsection{Desarrollo y Documentación Técnica}
+\begin{itemize}
+\item \textbf{Lenguajes y entornos aprobados:} El desarrollo del modelo debe realizarse en lenguajes y entornos previamente autorizados por el área de Tecnología y Comite de modelos en caso de existir (por ejemplo, R, Python, SAS, SQL, Microsoft Fabric, Azure, AWS) asegurando su capacidad con los sistemas actuales y su capacidad de ser auditado.
+\item \textbf{Desarrollo técnico:} El equipo o área desarrollador debe construir el modelo a partir de datos validados, aplicando técnicas estadísticamente sólidas o de aprendizaje automático, según corresponda. Se debe mantener registro de las decisiones metodológicas, ajustes, pruebas intermedías y validaciones internas. 
+\item \textbf{Documentación estructurada:} Durante el proceso de desarrollo debe generarse documentación técnica que describa con claridad: 
+\begin{itemize}
+\item Las fuentes de datos utilizadas y los criterios de filtrado o exclusión aplicados. 
+\item El tratamiento de datos (limpieza, transformación e imputación).
+\item La justificación del algoritmo seleccionado. 
+\item Los supuestos del modelo y su validación. 
+\item Las métricas de performance (ej. AUC, KS, RMSE) con los resultados obtenidos en entrenamiento y validación. 
+\item La evaluación de riesgo de sesgo y consideraciones éticas si aplica. 
+\end{itemize}
+\item \textbf{Código fuente organizado:} El código debe estar versionado, contener comentarios explicativos, y ser almacenado en un repositorio institucional (por ejemplo, Git u otro) que garantice su trazabilidad y reutilización. 
+\end{itemize}
+\subsection{Validación Independiente}
+\begin{itemize}
+\item \textbf{Validación técnica y estadística:} Se realiza una validación independiente por parte de un equipo distinto al desarrollador. Esta validación busca asegurar que el modelo cumple los estándares de robustez, precisión y alineamiento con su proposito orignal. 
+\item \textbf{Emisión de recomendaciones:} El resultado de la validación se documenta en un reporte formal que incluye hallazgos, riesgos identificados y recomendaciones específicas para su ajuste o mejora si aplica. Este informe debe acompañar cualquier solicitud de aprobación ante el comite de modelos. 
+\end{itemize}
+\subsection{Aprobación y Registro}
+\begin{itemize}
+\item \textbf{Evaluación por Comite:} El comite de modelos analiza el modelo propuesto con base en la documentación técnica, el informe de validación independiente y los criterios establecidos en este marco de gobernanza. Solo los modelos que cuenten con el visto bueno del comite pueden avanzar a etapas de implementación. 
+\item \textbf{Registro formal:} Los modelos aprobados deben ser registrados en la \textbf{Base Maestra de Modelos de Riesgos (BMMR)}, un repositorio centralizado de modelos alojado en entornos técnologicos institucionales (por ejemplo, Data Lake, Microsoft Fabric u otra plataforma autorizada). Este registro permitirá trazabilidad, control y cumplimiento regulatorio. 
+\end{itemize}
+% Implementación ------------------------------
+\subsection{Implementación y Monitoreo}
+\begin{itemize}
+\item \textbf{Puesta en producción:} El modelo aprobado se implementa en el entorno productivo bajo control de versiones, asegurando que los cambios estén debidamente auditados y documentados. Se debe garantizar que la lógica del modelo en producción coincida con lo aprobado técnicamente. 
+\item \textbf{Monitoreo continuo:} Se establecen indicadores de desempeño (como las vistas en la sección 3.2) para detectar desviaciones que pueden comprometer la integridad del modelo. 
+\end{itemize}
+\subsection{Recalibración y Retiro}
+\begin{itemize}
+\item \textbf{Revisión periódica:} Se establecen ventanas de revisión anuales  o cuando se detecten un deterioro significativo en el desempeño del modelo. El análisis debe determinar si es necesario  recalibrar, rediseñar o reemplazar el modelo. 
+\item \textbf{Cierre documentado:} Si se determina que un modelo ha pérdido utilidad o validez, se procede con su cierre formal. Este debe ser documentado detalladamente, indicando causas, fecha efectiva, y si aplica, el modelo que lo reemplaza. Esta información debe actualizarse en la \textbf{Base Maestra de Modelos de Riesgos}. 
+\end{itemize}
+%\section{Registro Centralizado de Modelos (BMMR)}
+%Cada modelo aprobado debe contar con una ficha técnica digital en la \textbf{Base Maestra de Modelos de Riesgos}, con los siguientes campos:
+%\begin{itemize}
+%\item Código llave  y nombre del modelo. 
+%\item Área propietaria
+%\item Tipo (Predictivo, prescriptivo, diagnóstico)
+%\item Uso principal 
+%\item Variables utilizadas 
+%\item Dataset de entrenamiento y fecha. 
+%\item Lenguaje/modelo  (ej. XGBoost, ARIMA, LSTM,Prophet, etc.).
+%\item Métricas de validación.
+%\item Fecha de aprobación. 
+%\item Fecha de última recalibración. 
+%\item Estado actual: En uso / Revisión / Retirado 
+%\item Ubicación del código y documenación (Git institucional u otro)
+%\end{itemize} 
+
+
+% ---------------------------------------------------- REQUERIMIENTOS MINIMOS DOCUMENTACION  ---------------------------------------------------- %
+
+\section{Requerimientos Mínimos de Documentación Técnica del Modelo}
+
+Todo modelo desarrollado dentro del Grupo Financiero deberá contar con una documentación mínima estandarizada, la cual es responsabilidad del área o persona que lidera su construcción. Esta documentación es indespensable para asegurar la transparencia, validación, trazabilidad y preparación para su posterior puesta en producción. 
+
+Los elementos mínimos que debe contener dicha documentación son los siguientes: 
+
+\subsection{Ficha Técnica del Modelo}
+
+En los anexos de está documentación debe estar una ficha técnica como la que se visualiza en el Anexo A. 
+
+\subsection{Descripción del Dataset}
+
+Debe incluir: 
+\begin{itemize}
+\item Fuentes de origen de datos
+\item Periodo de análisis y corte
+\item Criterio de exclusión/inclusión de datos 
+\item Tratamientos aplicados (limpieza, codificación, imputación)
+\item Diccionario de variables empledas 
+\end{itemize}
+
+\subsection{Fundamentos Metodológico y Justificación} 
+\begin{itemize}
+\item Descripción de la lógica del modelo y su racionalidad estadística o computacional
+\item Motivo de la selección del algoritmo
+\item Alternativas exploradas (si aplica)
+\item Evaluación de supuestos y consistencia del modelo la teoría del riesgos
+\end{itemize}
+
+\subsection{Evaluación de Desempeño}
+\begin{itemize}
+\item Resultados de entrenamiento y validación 
+\item Métricas utilizadas y justificación de su elección (ej. ver sección 3.2)
+\item Análisis de sensibilidad o estabilidad
+\item Evidencia de no sobreajuste
+\end{itemize}
+
+\subsection{Evidencia de Validación Independiente}
+
+\begin{itemize}
+\item Reporte de validación o validadores externos al área que desarrollo el modelo. 
+\end{itemize}
+
+Toda está información expuesta en esta sección será solicitada por los validadores independientes y constituye un prerrequisito obligatorio para avanzar hacia las fases de validación y puesta en producción. 
+\newpage
+% ---------------------------------------------------- ANEXO A ---------------------------------------------------- %
+\section{Anexo A: Ficha Técnica del Modelo}
+%\rowcolors{1}{ficolight}{white}
+\begin{longtable}{>{\bfseries}p{5cm}  p{10cm}}
+\toprule
+\rowcolor{ficoblue}
+\color{white}\textbf{Campol}  & \color{white}\textbf{Descripción} \\
+ \midrule
+Nombre del Modelo              & Nombre descriptivo del modelo \\
+\addlinespace
+Código Interno                    & ID único en la Base Maestra de Modelos de Riesgos\\
+\addlinespace
+Área Propietaria                   & Área responsable (ej. Riesgo Consumo) \\ 
+\addlinespace
+Propósito del Modelo            & Descripción del objetivo \\
+\addlinespace
+Tipo de Modelo                   & predictivo / Diagnóstico / Prescriptivo \\ 
+\addlinespace
+Algoritmo o Técnica             & Ej. XGBoost, ARIMA, LSTM, etc \\
+\addlinespace
+Variables predictoras            & Lista de variables explicativas \\
+\addlinespace
+Variable Objetivo                 &  Ej. PD, M90, Score \\
+\addlinespace
+Lenguaje y Entorno             & R / Python / SAS / Azure Databricks \\
+\addlinespace
+Versión del Modelo              & 1.0, 1.1, ... según actualizaciones \\ 
+\addlinespace 
+Fecha de Desarrollo            & Mes/Año \\ 
+\addlinespace
+Fecha de Validación            & Mes/Año\\
+\addlinespace 
+Fecha de Producción          & Mes/Año\\
+\addlinespace
+Validador                          & Nombre del área o persona \\
+\addlinespace   
+Desarrollador(es)               &  Nombre(s) del equipo  o persona que desarrollo el modelo \\
+\addlinespace
+Métricas de evaluación       & AUC, MAPE, Accuracy, KS, etc \\ 
+\addlinespace
+Dataset de Entrenamiento  & Origen, periodo y fuente \\ 
+\addlinespace
+Segmento de Aplicación    & Ej. Tarjetas, Préstamos, Hipotecas, cobros, etc. \\
+\addlinespace
+  Frecuencia de Reentrenamiento & Trimestral / Anual / Condicional \\
+\addlinespace
+Estado Actual             & En desarrollo / En uso / Revisión / Retirado \\
+\addlinespace
+Ubicación del Código Fuente & URL en Git Institucional \\
+\addlinespace
+Documentación Complementaria & PDF, README, notebooks, etc.\\ 
+\addlinespace
+\bottomrule
+\end{longtable}
+\newpage
+% ---------------------------------------------------- ANEXO B ---------------------------------------------------- %
+\section{Anexo B: Matriz de Roles y Responsabilidades}
+%\rowcolors{1}{ficolight}{white}
+\begin{longtable}{>{\bfseries}p{4.7cm} p{4cm} p{7.3cm}}
+\toprule
+\rowcolor{ficoblue}
+\color{white}\textbf{Rol}  &\color{white}\textbf{Responsable}& \color{white}\textbf{Funciones } \\
+ \midrule
+Owner del Modelo           & Gerencia de Riesgos (Créditos, Consumo, etc.) & Definir, interpretar resultados, monitorear uso \\ 
+\addlinespace
+Desarrollo                      & Data Science u otro     & Desarrollo técnico, entrenamiento, documentación \\ 
+\addlinespace
+Validación independiente & Unidad de validación de modelos                    & Evaluar técnica, estadística y regulación \\ 
+\addlinespace
+Comite de Modelos          & Representante de riesgos, finanzas & Aprobar modelos nuevos o cambios \\ 
+\addlinespace
+Ecosistema u otro & Data Engineering/TI & Despliegue, infraestructura, soporte \\ 
+\addlinespace
+\bottomrule
+\end{longtable}
+% ---------------------------------------------------- ANEXO C ---------------------------------------------------- %
+\section{Anexo C: Criterios de Validación Técnica}
+%\rowcolors{1}{ficolight}{white}
+\begin{longtable}{>{\bfseries}p{4.7cm} p{4cm} p{7.3cm}}
+\toprule
+\rowcolor{ficoblue}
+\color{white}\textbf{Categoría}  &\color{white}\textbf{Criterio}& \color{white}\textbf{Método de Evalución } \\
+ \midrule
+Calidad del Modelo           & Justificación técnica y estadística clara & Revisión documental y cálculo de métricas \\ 
+\addlinespace
+Performance Predictivo  & $AUC>0.70$, $KS>25\%$ o criterio definido por el Owner & Validación cruzada, test out-of-sample\\
+\addlinespace
+Riesgos del Modelo  & Evaluación de Overfitting, drift y bias & Análisis de SHAP, estabilidad por segmento \\
+\addlinespace
+Robustez del Dataset & Fuente de datos, imputación, equilibrio & Exploración de calidad de datos, proporciones \\ 
+\addlinespace
+Documentación & Clara, reproducible y versionada & Validación contra checklist de documentación \\ 
+\addlinespace
+Cumplimiento Regulatorio & Alineado a CNBS, IFRS 9, Basilea & Checklist legal / regulatorio \\ 
+\addlinespace
+Explicabilidad y Ética & SHAP/LIME/ICE para modelos no lineales & Revisión del informe de interpretabilidad \\
+\addlinespace
+\bottomrule
+\end{longtable}
+\newpage
+% ---------------------------------------------------- ANEXO D ---------------------------------------------------- %
+\section{Ejemplo - Ficha Técnica del Modelo}
+%\rowcolors{1}{ficolight}{white}
+\begin{longtable}{>{\bfseries}p{5.3cm} p{10.7cm}}
+\toprule
+\rowcolor{ficoblue}
+\color{white}\textbf{Campo}   &\color{white}\textbf{Contenido} \\
+ \midrule
+Nombre del Modelo                & Modelo de Probabilidad de Incumplimiento (PD) Tarjetas - XGBoost  \\ 
+\addlinespace
+Código Interno                      & 00001\\ 
+\addlinespace 
+Área Propietaria                    & Riesgo de Crédito Consumo \\ 
+\addlinespace
+Propósito                             & Estimar la probabilidad de que un cliente caiga en M90+ en los próximos 12 meses \\ 
+\addlinespace
+Tipo de Modelo                    & Predictivo \\ 
+\addlinespace
+Algoritmo o Técnica             & XGBoost con grid search y validación cruzada \\ 
+\addlinespace
+Variables predictoras            & Tasa Política Monetaria, Reservas Netas, Score Interno, Antiguedad del Cliente, \% de Utilización \\
+\addlinespace
+Variable Objetivo                 & M90 (1 si > 90 días vencido, 0 si no) \\
+\addlinespace 
+Lenguaje y Entorno             & Python 3.10 (Sklearn xgboost) \\ 
+\addlinespace
+Versión del Modelo              & 1.0 \\ 
+\addlinespace 
+Fecha de Desarrollo            & Mayo 2025 \\ 
+\addlinespace
+Validador                           & Área de Ciencia de Datos \\ 
+\addlinespace
+Desarrollador(es)                & Equipo Analitica Riesgo Consumo \\ 
+\addlinespace
+Métricas de Evaluación        & AUC: 0.823, KS: 0.46, MAPE: 8.2\% \\ 
+\addlinespace
+Dataset de Entrenamiento   & Clientes activos (2020-2024), variables macroeconomicas mensuales \\ 
+\addlinespace
+Segmento de Aplicación      & Tarjetas de crédito V+ \\ 
+\addlinespace
+Uso en procesos Clave        &  Asignación de líneas, provisiones IFRS9\\
+\addlinespace
+Frecuencia de Reentrenamiento & Anual o si hay deterioro en el performance \\ 
+\addlinespace
+Estado Actual                     & En producción \\ 
+\addlinespace
+Ubicación del Código Fuente y Dataset del modelo & GitLab Ficohsa: / riesgos /pd\_modelos/XGBoost 2025 \\
+\addlinespace
+Documentación Complementaria & README técnico, manual usuario, validación.pdf \\
+\addlinespace 
+\bottomrule
+\end{longtable}
+\end{document}
