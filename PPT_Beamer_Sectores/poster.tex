@@ -78,22 +78,33 @@
 %====================================================
 %                                                        BLOQUE 1
 %====================================================
-  \begin{block}{Contexto}
+  \begin{block}{Contexto general}
 
-    El café es uno de los principales productos de exportación y fuente de ingresos de Honduras, las recientes fluctuaciones en los precios internacionales del café, junto con factores locales, generan oportunidades y riesgos para los involucrados en este sector. En este boletin buscamos analizar
-    la coyuntura actual para apoyar la toma de decisiones estratégicas en la gestión de riesgos y oportunidades crediticias para Banco Ficohsa Honduras. 
+    El \textbf{sector cafetalero hondureño} continúa siendo uno de los pilares de la economía nacional, representando aproximadamente el 5\% \textbf{del PIB total} y cerca del 20\% \textbf{del PIB agrícola}. Además, genera más de \textbf{120 mil empleos directos} y constituye la \textbf{principal fuente de divisas del sector agroexportador.}\\[0.4cm]
+
+   Sin embargo, el entorno actual presenta \textbf{retos significativos}. Tras alcanzar un récord histórico de \textbf{7.29 millones de sacos exportados en la cosecha de 2016-2017}, el volumen cayo a \textbf{4.68 millones de sacos en la cosecha 2023-2024}, lo que equivale a una \textbf{reducción del 36\%}. Esta contracción responde a una combinación de factores como la \textbf{volatilidad en los precios internacionales, condiciones climáticas adversas} y \textbf{aumentos en los costos de producción y transporte}.  
    
    \begin{center}
-    \includegraphics[scale=0.8]{C:/Users/HN32885/Documents/2025/LateX/PPT_Beamer_Sectores/fig1.jpg}
+    \includegraphics[scale=0.55]{C:/Users/HN32885/Documents/2025/LateX/PPT_Beamer_Sectores/fig1.jpg}
    \end{center}
 
-Honduras pasó de un récord histórico de 7.29 millones de savos exportados en la cosecha 2016-2017 a 4.68 millones de sacos exportados en la cosecha 2023-2024, lo que representa una reducción del 36\%. \textbf{Las exportaciones de café representan el 5\% del PIB nacional y el 20\% del PIB agrícola.} 
+Al mismo tiempo, las \textbf{expectativas de precios futuros} muestran signos mixtos: mientras los contratos en la bolsa de Nueva York (ICE Coffe C) se mantienen por encima del promedio histórico, los \textbf{margenes de rentabilidad del productor} se han visto presionados por la inflación y la apreciación del dólar.\\[0.4cm]
+
+En este boletín, elaborado por el área de \textbf{Gestión Integral de Riesgos} y \textbf{Ciencia de Datos de Grupo Financiero Ficohsa}, se analiza la \textbf{coyuntura actual del sector café}, sus principales \textbf{riesgos microfinancieros} y la \textbf{calificación del sector según el modelo IRSS (Índice de Riesgos Sectorial Sistématico)}, con el fin de apoyar la \textbf{toma de decisiones estratégicas de crédito y apetito de riesgo} institucional.
 
   \end{block}
 %====================================================
 %                                                        BLOQUE 2
 %====================================================
-  \begin{block}{Bloque 2}
+  \begin{block}{Desempeño reciente del sector cafetalero}
+
+De acuerdo con datos de ADECAFEH e IHCAFE, durante la cosecha 2023-2024 las exportaciones de café hondureño se estabilizaron en torno a \textbf{4.68 millones de sacos de 60kg}, cifra que confirma la \textbf{moderación en la producción} tras varios años de ajustes estructurales en el sector. Aunque el volumen continúa por debajo del máximo histórico alcanzado en 2016-2017, el \textbf{valor exportado mostró una recuperación parcial} gracias a mejores precios internacionales y a una \textbf{mayor participación de cafés diferenciados (orgánico, RFA, FLO, entre otros).}\\[1cm]
+
+El repunte observado en el valor de exportación responde principalmente a \textbf{factores de mercado externos}, más que aun aumento en la productividad local, lo cual mantiene al sector \textbf{expuesto a la volatilidad de precios} y a las \textbf{condiciones climáticas} que afectan la oferta mundial. \\[1cm]
+
+En este contexto, el \textbf{IRSS}, modelo desarrollado por el área Gestión Integral de Riesgos y Ciencia de Datos permite \textbf{cuantificar el nivel de vulnerabilidad y estabilidad relativa} del sector frente a factores macroeconómicos, financieros y productivos. \\[1cm]
+
+Según la estimación más reciente, el IRSS del sector café se ubica en XXXXXX (nivel bajo), lo que refleja una exposición baja al riesgo sistémico, sustentada en precios favorables pero con alta sensibilidad a choques externos.
 
    
 
@@ -101,11 +112,23 @@ Honduras pasó de un récord histórico de 7.29 millones de savos exportados en 
 %====================================================
 %                                                        BLOQUE 3
 %====================================================
-  \begin{alertblock}{Bloque 3}
+  \begin{block}{Factores macroeconómicos y exposición crediticia}
 
-
-
-  \end{alertblock}
+{Según el IRSS, el comportamiento de ciertos indicadores o variables condiciona directamente la capacidad de pago del sector cafetalero y el nivel de riesgo que asume el banco al otorgar créditos agrícolas. Estas variables son: }
+{\small
+\begin{itemize}
+\item \textbf{VENTA\_ENERGIA:} ventas de energia de la ENEE.
+\item \textbf{SPI3\_ELPA:} índice de precipitaciones acumulado de 3 meses en el Paraíso.
+\item \textbf{SPI3\_AGA:} índice de precipitaciones acumulado de 3 meses en Agalta.
+\item \textbf{WTI14:} Precio global actual del petróleo.
+\item \textbf{IPI\_USA:} índice de producción industrial USA.
+\item \textbf{REAL\_EX\_BR:} Tipo de cambio real del real brasileño.
+\item \textbf{X\_CAFE\_BR:} Exportaciones de café de Brasil.
+\item \textbf{PCA1\_xcafé:} Componente principal o índice sintético de las exportaciones de café.
+\end{itemize}
+}
+{ Estas variables permiten capturar los efectos combinados de la demanda energética, el clima, la producción internacional y las condiciones cambiarias sobre el desempeño del sector cafetalero. En conjunto, explican una proporción significativa de la variabilidad del riesgo crediticio observado en el portafolio agrícola de Ficohsa.}
+  \end{block}
 
 \end{column}
 
@@ -115,7 +138,7 @@ Honduras pasó de un récord histórico de 7.29 millones de savos exportados en 
 %====================================================
 %                                                        BLOQUE 4
 %====================================================
-  \begin{block}{Bloque 4}
+  \begin{block}{Resultados del modelo IRSS y análisis de riesgo}
 
 
 
