@@ -1,0 +1,174 @@
+\documentclass[12pt]{article}
+
+% ===== Configuración de página =====
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[utf8]{inputenc}
+
+% ===== Paquetes visuales =====
+\usepackage{eso-pic}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{lipsum}
+
+% ===== Idioma y fecha en español =====
+\usepackage[spanish,es-lcroman]{babel}
+\usepackage{datetime}
+\renewcommand{\dateseparator}{de }
+\renewcommand{\today}{\number\day~de~\ifcase\month\or
+enero\or febrero\or marzo\or abril\or mayo\or junio\or
+julio\or agosto\or septiembre\or octubre\or noviembre\or diciembre\fi~de~\number\year}
+
+% ===== Paleta institucional =====
+\definecolor{FicohsaBlue}{HTML}{002B6B}
+\definecolor{FicohsaCyan}{HTML}{00B5E2}
+\definecolor{FicohsaGray}{HTML}{7A8892}
+
+% ===== Parámetros EDITABLES =====
+\newcommand{\FICOLOGOFILE}{Ficohsa.png} % <-- CAMBIA ESTA RUTA
+\newcommand{\FICOLOGOWIDTH}{22mm}
+\newcommand{\LogoOffsetX}{12mm}
+\newcommand{\LogoOffsetY}{6mm}
+\newcommand{\BarWidth}{10mm}
+
+% ===== Fondo persistente (todas las páginas) =====
+\AddToShipoutPictureBG{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Barra azul vertical
+    \fill[FicohsaBlue]
+      (current page.south west) rectangle
+      ($ (current page.north west) + (\BarWidth,0) $);
+  \end{tikzpicture}%
+}
+
+% ===== Logo persistente (todas las páginas) =====
+\AddToShipoutPictureFG{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0pt] at
+      ($ (current page.north west) + (\LogoOffsetX,-\LogoOffsetY) $)
+    {%
+      \IfFileExists{\FICOLOGOFILE}{%
+        \includegraphics[width=\FICOLOGOWIDTH]{\FICOLOGOFILE}%
+      }{%
+        \fbox{\bfseries \large FICOHSA}%
+      }%
+    };
+  \end{tikzpicture}%
+}
+
+% ===== Índice =====
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+% ==================== DOCUMENTO ====================
+\begin{document}
+
+% ======== PORTADA =========
+\thispagestyle{empty}
+
+% Fondo decorativo adicional de portada (líneas suaves)
+\begin{tikzpicture}[remember picture,overlay]
+  \draw[FicohsaCyan!40, line width=10pt, line cap=round]
+    ($ (current page.south east) + (-5cm,1.5cm) $)
+    to[out=180,in=-10]
+    ($ (current page.south west) + (5cm,2cm) $);
+
+  \draw[FicohsaCyan!60, line width=4pt, line cap=round]
+    ($ (current page.south east) + (-6cm,3cm) $)
+    to[out=190,in=0]
+    ($ (current page.south west) + (3cm,2.5cm) $);
+\end{tikzpicture}
+
+\vspace*{5cm}
+\begin{center}
+{\Huge\bfseries Informe de Validación Modelo de Originación Nicaragua\par}
+\vspace{1cm}
+{\Large Subgerencia de Ciencia de Datos –  Riesgos\par}
+\vspace{0.3cm}
+{\large Grupo Financiero Ficohsa\par}
+\vspace{3cm}
+{\Large \textcolor{FicohsaBlue}{\textbf{Confidencial}}\par}
+\vfill
+{\large Tegucigalpa, Honduras – \today}
+\end{center}
+
+\newpage
+
+% ===== ÍNDICE =====
+\tableofcontents
+\newpage
+
+% ===== CONTENIDO =====
+
+%------------------------------------- Introducción -------------------------------------
+\section{Objetivo de la validación}
+
+Evaluar la solidez metodológica, calidad de datos y capacidad predictiva del modelo de originaciones de tarjeta de crédito desarrollado por Banco Ficohsa Nicaragua;  verificar coherencia  del scorecard, backtesting/estabilidad y preparación para producción, conforme a las mejores prácticas internas (Gobernanza de Modelo) y de industria. Nos enfocamos en evidencia y trazabilidad de lo reportado por el desarrollador.  Puntualmente buscamos asegurar que el modelo: 
+
+\begin{itemize}
+\item Cumpla los estándares definidos por el Marco de Gobernanza de Modelos desarrollada por Riesgos.
+\item Se encuentre alineado con las mejores prácticas regulatorias y de la industria en materia de riesgos. 
+\item Presente resultados consistentes, transparentes y trazables, garantizando una implementación segura y robusta en producción. 
+\end{itemize}
+
+\textbf{\underline{Nota Aclaratoria:}} El presente informe se enfoca en validar el modelo y señalar aspectos \textbf{no documentados en el reporte técnico del desarrollador}, que son críticos para su implementación segura y robusta en producción. 
+
+% ------------------------------------ Alcance Validación --------------------------------
+\section{Alcance}
+
+La presente validación abarca la revisión del modelo de originaciones de crédito desarrollado por Banco Ficohsa Honduras. El alcance incluye los siguientes elementos: 
+\begin{itemize}
+\item \textbf{Revisión Documental:} análisis del informe técnico del desarrollador, verificando la completitud y consistencia de la información presentada. 
+\item \textbf{Calidad de Datos:} evaluación de la completitud, consistencia y trazabilidad de las fuentes de datos utilizadas en el modelo. 
+\item \textbf{Procesamiento de Variables:} revisión de los procedimientos de depuración, imputación, tratamiento de outliers, control de multicolinealidad y selección de variables. 
+\item \textbf{Metodología de Modelado:} análisis de la solidez estadística de los enfoques aplicados, criterios de selección de la técnica final. 
+\item \textbf{Desempeño Predictivo:} Revisión de las métricas de discriminación (KS, AUC, GINI), precisión y estabilidad temporal del modelo. \textbf{Backtesting y estabilidad:} revisión de las pruebas fuera de muestra, así como de las métricas de monitoreo propuestas.
+\end{itemize}
+\textbf{\underline{Exclusiones del Alcance}}
+\begin{itemize}
+\item No se cuantifica impactos financieros directos (pricing, rentabilidad ajustada al riesgo, etc.).
+\item La validación no sustituye la responsabilidad del área desarrolladora en cuanto a la correcta ejecución técnica del código. 
+\end{itemize}
+\newpage
+
+% ----------------------------------- Resumen del Modelo a Validar ----------------------------------
+\subsection{Resumen del Modelo a Validar}
+
+El propósito de este modelo es predecir la probabilidad de que un cliente incurra en mora $\geq 90$ días (M90+) dentro de los primeros 12 meses posteriores a la activación del producto de tarjeta de crédito. El objetivo responde al patrón histórico de siniestralidad, que alcanza su máximo entre 6 y 12 meses de madurez.
+
+\begin{itemize}
+\item \textbf{Tipo de Modelo:} Regresión Logística, por su interpretabilidad e integración natural a scorecard; seleccion de variables con \textbf{RFECV} usando \textbf{XGBoost} como estimador base, \textbf{validación cruzada 10-fold} y \textbf{optimización con Optuna}.
+\item \textbf{Variable Objetivo:} cliente \textbf{malo} si alcanza M90+ en los 12 meses posteriores a su originación; \textbf{bueno} en caso contrario (definiciones explícitas de goods/bads). 
+\item \textbf{Periodo de Datos:} 
+\begin{itemize}
+\item Observación: cosechas de mayo 2023 - abril 2024. 
+\item Desempeño: mayo 2024 - abril 2025 (12 meses).
+\end{itemize}
+\item \textbf{Fuentes de Datos:}\\ DBDWHNG (Oracle) $\longrightarrow$ CF\_NI\_ORIG $\longrightarrow$ T\_CLIT\_ANALISISSOLICITUDCREDIT (solicitudes; integra burós y datos demográficos). Los desarrolladores trabajaron exclusivamente con esta fuente interna en Nicaragua. 
+\item \textbf{Población analizada:} 
+\begin{itemize}
+\item \textbf{Inicial externa:} 127,399 primeras observaciones; tras reglas de elegibilidad y "no-hit", población final con \textbf{8,721 buenos (80.9\%)} y \textbf{2,056 malos (9.1\%)}. 
+\item \textbf{Inicial Interna:} 21,412 exclusiones operativas (corporativas/PYMES, segundas cuentas, migradas, colaboradores, pignoradas, sin uso, etc.) $\longrightarrow$ \textbf{7,706 buenos (90.8\%)} y \textbf{780 malos (9.19\%)} 
+\end{itemize}
+\textbf{Nota:} el documento NIC también resume una \textbf{población total} (inicial 148,811; final 19,263) en su resumen ejecutivo.
+\end{itemize}
+%\section{Metodología}
+%\subsection{Datos y preparación}
+%\lipsum[5]
+%\subsection{Modelado}
+%\lipsum[6]
+
+%\section{Resultados}
+%\subsection{Métricas}
+%\lipsum[7]
+%\subsection{Análisis}
+%\lipsum[8]
+
+%\section{Conclusiones y Recomendaciones}
+%\lipsum[9]
+
+\end{document}
+
+
+ 
