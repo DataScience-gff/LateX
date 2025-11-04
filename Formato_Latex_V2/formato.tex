@@ -1,0 +1,130 @@
+\documentclass[12pt]{article}
+
+% ===== Configuración de página =====
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[utf8]{inputenc}
+
+% ===== Paquetes visuales =====
+\usepackage{eso-pic}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{lipsum}
+
+% ===== Idioma y fecha en español =====
+\usepackage[spanish,es-lcroman]{babel}
+\usepackage{datetime}
+\renewcommand{\dateseparator}{de }
+\renewcommand{\today}{\number\day~de~\ifcase\month\or
+enero\or febrero\or marzo\or abril\or mayo\or junio\or
+julio\or agosto\or septiembre\or octubre\or noviembre\or diciembre\fi~de~\number\year}
+
+% ===== Paleta institucional =====
+\definecolor{FicohsaBlue}{HTML}{002B6B}
+\definecolor{FicohsaCyan}{HTML}{00B5E2}
+\definecolor{FicohsaGray}{HTML}{7A8892}
+
+% ===== Parámetros EDITABLES =====
+\newcommand{\FICOLOGOFILE}{Ficohsa.png} % <-- CAMBIA ESTA RUTA
+\newcommand{\FICOLOGOWIDTH}{22mm}
+\newcommand{\LogoOffsetX}{12mm}
+\newcommand{\LogoOffsetY}{6mm}
+\newcommand{\BarWidth}{10mm}
+
+% ===== Fondo persistente (todas las páginas) =====
+\AddToShipoutPictureBG{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Barra azul vertical
+    \fill[FicohsaBlue]
+      (current page.south west) rectangle
+      ($ (current page.north west) + (\BarWidth,0) $);
+  \end{tikzpicture}%
+}
+
+% ===== Logo persistente (todas las páginas) =====
+\AddToShipoutPictureFG{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0pt] at
+      ($ (current page.north west) + (\LogoOffsetX,-\LogoOffsetY) $)
+    {%
+      \IfFileExists{\FICOLOGOFILE}{%
+        \includegraphics[width=\FICOLOGOWIDTH]{\FICOLOGOFILE}%
+      }{%
+        \fbox{\bfseries \large FICOHSA}%
+      }%
+    };
+  \end{tikzpicture}%
+}
+
+% ===== Índice =====
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+% ==================== DOCUMENTO ====================
+\begin{document}
+
+% ======== PORTADA =========
+\thispagestyle{empty}
+
+% Fondo decorativo adicional de portada (líneas suaves)
+\begin{tikzpicture}[remember picture,overlay]
+  \draw[FicohsaCyan!40, line width=10pt, line cap=round]
+    ($ (current page.south east) + (-5cm,1.5cm) $)
+    to[out=180,in=-10]
+    ($ (current page.south west) + (5cm,2cm) $);
+
+  \draw[FicohsaCyan!60, line width=4pt, line cap=round]
+    ($ (current page.south east) + (-6cm,3cm) $)
+    to[out=190,in=0]
+    ($ (current page.south west) + (3cm,2.5cm) $);
+\end{tikzpicture}
+
+\vspace*{5cm}
+\begin{center}
+{\Huge\bfseries Informe de Validación de Modelo\par}
+\vspace{1cm}
+{\Large Subgerencia de Ciencia de Datos – División de Riesgos\par}
+\vspace{0.3cm}
+{\large Grupo Financiero Ficohsa\par}
+\vspace{3cm}
+{\Large \textcolor{FicohsaBlue}{\textbf{Confidencial}}\par}
+\vfill
+{\large Tegucigalpa, Honduras – \today}
+\end{center}
+
+\newpage
+
+% ===== ÍNDICE =====
+\tableofcontents
+\newpage
+
+% ===== CONTENIDO =====
+\section{Introducción}
+\lipsum[1-2]
+
+\section{Alcance}
+\subsection{Objetivos}
+\lipsum[3]
+\subsection{Supuestos}
+\lipsum[4]
+
+\section{Metodología}
+\subsection{Datos y preparación}
+\lipsum[5]
+\subsection{Modelado}
+\lipsum[6]
+
+\section{Resultados}
+\subsection{Métricas}
+\lipsum[7]
+\subsection{Análisis}
+\lipsum[8]
+
+\section{Conclusiones y Recomendaciones}
+\lipsum[9]
+
+\end{document}
+
+
+
