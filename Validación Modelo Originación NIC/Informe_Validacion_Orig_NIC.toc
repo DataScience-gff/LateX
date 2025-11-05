@@ -1,0 +1,12 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Objetivo de la validación}{3}{}%
+\contentsline {section}{\numberline {2}Alcance}{3}{}%
+\contentsline {section}{\numberline {3}Resumen del Modelo a Validar}{4}{}%
+\contentsline {section}{\numberline {4}Análisis del Validador}{6}{}%
+\contentsline {subsection}{\numberline {4.1}Calidad y Preparación de Datos}{6}{}%
+\contentsline {subsubsection}{\underline {Hallazgos y vacios identificados}}{6}{}%
+\contentsline {subsection}{\numberline {4.2}Especificaci\'on del Modelo y Significancia de Variables }{9}{}%
+\contentsline {subsection}{\numberline {4.3}Desempe\~no y Backtesting del Modelo}{10}{}%
+\contentsline {subsection}{\numberline {4.4}Pol\'itica de Corte y Eficiencia del Modelo}{12}{}%
+\contentsline {subsection}{\numberline {4.5}Plan de Monitoreo y Seguimiento en Producci\'on}{13}{}%
+\contentsline {section}{\numberline {5}Conclusi\'on General del Validador}{15}{}%

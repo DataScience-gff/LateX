@@ -1,0 +1,761 @@
+\documentclass[12pt]{article}
+
+% ===== Configuración de página =====
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[utf8]{inputenc}
+
+% ===== Paquetes visuales =====
+\usepackage{eso-pic}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{float}
+
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{array}
+\usepackage{caption}
+\captionsetup[table]{skip=5pt,labelfont=bf,font=small}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{booktabs}
+\definecolor{FicohsaBlue}{HTML}{0033A0}
+
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx} % para \resizebox
+\definecolor{FicohsaBlue}{HTML}{0033A0}
+
+\usepackage{tcolorbox}
+\tcbset{colback=gray!5,colframe=FicohsaBlue!85,arc=2mm,boxrule=0.6pt,left=6pt,right=6pt,top=4pt,bottom=4pt}
+
+
+% ===== Idioma y fecha en español =====
+\usepackage[spanish,es-lcroman]{babel}
+\usepackage{datetime}
+\renewcommand{\dateseparator}{de }
+\renewcommand{\today}{\number\day~de~\ifcase\month\or
+enero\or febrero\or marzo\or abril\or mayo\or junio\or
+julio\or agosto\or septiembre\or octubre\or noviembre\or diciembre\fi~de~\number\year}
+
+% ===== Paleta institucional =====
+\definecolor{FicohsaBlue}{HTML}{002B6B}
+\definecolor{FicohsaCyan}{HTML}{00B5E2}
+\definecolor{FicohsaGray}{HTML}{7A8892}
+
+% ===== Parámetros EDITABLES =====
+\newcommand{\FICOLOGOFILE}{Ficohsa.png} % <-- CAMBIA ESTA RUTA
+\newcommand{\FICOLOGOWIDTH}{22mm}
+\newcommand{\LogoOffsetX}{12mm}
+\newcommand{\LogoOffsetY}{6mm}
+\newcommand{\BarWidth}{10mm}
+
+% ===== Fondo persistente (todas las páginas) =====
+\AddToShipoutPictureBG{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Barra azul vertical
+    \fill[FicohsaBlue]
+      (current page.south west) rectangle
+      ($ (current page.north west) + (\BarWidth,0) $);
+  \end{tikzpicture}%
+}
+
+% ===== Logo persistente (todas las páginas) =====
+\AddToShipoutPictureFG{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0pt] at
+      ($ (current page.north west) + (\LogoOffsetX,-\LogoOffsetY) $)
+    {%
+      \IfFileExists{\FICOLOGOFILE}{%
+        \includegraphics[width=\FICOLOGOWIDTH]{\FICOLOGOFILE}%
+      }{%
+        \fbox{\bfseries \large FICOHSA}%
+      }%
+    };
+  \end{tikzpicture}%
+}
+
+% ===== Índice =====
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+% ==================== DOCUMENTO ====================
+\begin{document}
+
+% ======== PORTADA =========
+\thispagestyle{empty}
+
+% Fondo decorativo adicional de portada (líneas suaves)
+\begin{tikzpicture}[remember picture,overlay]
+  \draw[FicohsaCyan!40, line width=10pt, line cap=round]
+    ($ (current page.south east) + (-5cm,1.5cm) $)
+    to[out=180,in=-10]
+    ($ (current page.south west) + (5cm,2cm) $);
+
+  \draw[FicohsaCyan!60, line width=4pt, line cap=round]
+    ($ (current page.south east) + (-6cm,3cm) $)
+    to[out=190,in=0]
+    ($ (current page.south west) + (3cm,2.5cm) $);
+\end{tikzpicture}
+
+\vspace*{5cm}
+\begin{center}
+{\Huge\bfseries Informe de Validación Modelo de Originación Nicaragua\par}
+\vspace{1cm}
+{\Large Subgerencia de Ciencia de Datos –  Riesgos\par}
+\vspace{0.3cm}
+{\large Grupo Financiero Ficohsa\par}
+\vspace{3cm}
+{\Large \textcolor{FicohsaBlue}{\textbf{Confidencial}}\par}
+\vfill
+{\large Tegucigalpa, Honduras – \today}
+\end{center}
+
+\newpage
+
+% ===== ÍNDICE =====
+\tableofcontents
+\newpage
+
+% ===== CONTENIDO =====
+
+%------------------------------------- Introducción -------------------------------------
+\section{Objetivo de la validación}
+
+Evaluar la solidez metodológica, calidad de datos y capacidad predictiva del modelo de originaciones de tarjeta de crédito desarrollado por Banco Ficohsa Nicaragua;  verificar coherencia  del scorecard, backtesting/estabilidad y preparación para producción, conforme a las mejores prácticas internas (Gobernanza de Modelo) y de industria. Nos enfocamos en evidencia y trazabilidad de lo reportado por el desarrollador.  Puntualmente buscamos asegurar que el modelo: 
+
+\begin{itemize}
+\item Cumpla los estándares definidos por el Marco de Gobernanza de Modelos desarrollada por Riesgos.
+\item Se encuentre alineado con las mejores prácticas regulatorias y de la industria en materia de riesgos. 
+\item Presente resultados consistentes, transparentes y trazables, garantizando una implementación segura y robusta en producción. 
+\end{itemize}
+
+\textbf{\underline{Nota Aclaratoria:}} El presente informe se enfoca en validar el modelo y señalar aspectos \textbf{no documentados en el reporte técnico del desarrollador}, que son críticos para su implementación segura y robusta en producción. 
+
+% ------------------------------------ Alcance Validación --------------------------------
+\section{Alcance}
+
+La presente validación abarca la revisión del modelo de originaciones de crédito desarrollado por Banco Ficohsa Nicaragua. El alcance incluye los siguientes elementos: 
+\begin{itemize}
+\item \textbf{Revisión Documental:} análisis del informe técnico del desarrollador, verificando la completitud y consistencia de la información presentada. 
+\item \textbf{Calidad de Datos:} evaluación de la completitud, consistencia y trazabilidad de las fuentes de datos utilizadas en el modelo. 
+\item \textbf{Procesamiento de Variables:} revisión de los procedimientos de depuración, imputación, tratamiento de outliers, control de multicolinealidad y selección de variables. 
+\item \textbf{Metodología de Modelado:} análisis de la solidez estadística de los enfoques aplicados, criterios de selección de la técnica final. 
+\item \textbf{Desempeño Predictivo:} Revisión de las métricas de discriminación (KS, AUC, GINI), precisión y estabilidad temporal del modelo. \textbf{Backtesting y estabilidad:} revisión de las pruebas fuera de muestra, así como de las métricas de monitoreo propuestas.
+\end{itemize}
+\textbf{\underline{Exclusiones del Alcance}}
+\begin{itemize}
+\item No se cuantifica impactos financieros directos (pricing, rentabilidad ajustada al riesgo, etc.).
+\item La validación no sustituye la responsabilidad del área desarrolladora en cuanto a la correcta ejecución técnica del código. 
+\end{itemize}
+\newpage
+
+% ----------------------------------- Resumen del Modelo a Validar ----------------------------------
+\section{Resumen del Modelo a Validar}
+
+Este modelo corresponde a la versión 2025 del score de originación de tarjetas de créditos, desarrollado por el equipo de Analítica de Crédito Nicaragua.\\
+
+El propósito de este modelo es predecir la probabilidad de que un cliente incurra en mora $\geq 90$ días (M90+) dentro de los primeros 12 meses posteriores a la activación del producto de tarjeta de crédito. El objetivo responde al patrón histórico de siniestralidad, que alcanza su máximo entre 6 y 12 meses de madurez.
+
+\begin{itemize}
+\item \textbf{Tipo de Modelo:} Regresión Logística, por su interpretabilidad e integración natural a scorecard; seleccion de variables con \textbf{RFECV} usando \textbf{XGBoost} como estimador base, \textbf{validación cruzada 10-fold} y \textbf{optimización con Optuna}.
+\item \textbf{Variable Objetivo:} cliente \textbf{malo} si alcanza M90+ en los 12 meses posteriores a su originación; \textbf{bueno} en caso contrario (definiciones explícitas de goods/bads). 
+\item \textbf{Periodo de Datos:} 
+\begin{itemize}
+\item Observación: cosechas de mayo 2023 - abril 2024. 
+\item Desempeño: mayo 2024 - abril 2025 (12 meses).
+\end{itemize}
+\item \textbf{Fuentes de Datos:}\\ DBDWHNG (Oracle) $\longrightarrow$ CF\_NI\_ORIG $\longrightarrow$ T\_CLIT\_ANALISISSOLICITUDCREDIT (solicitudes; integra burós y datos demográficos). Los desarrolladores trabajaron exclusivamente con esta fuente interna en Nicaragua. 
+\item \textbf{Población analizada:} 
+\begin{itemize}
+\item \textbf{Inicial externa:} 127,399 primeras observaciones; tras reglas de elegibilidad y "no-hit", población final con \textbf{8,721 buenos (80.9\%)} y \textbf{2,056 malos (9.1\%)}. 
+\item \textbf{Inicial Interna:} 21,412 exclusiones operativas (corporativas/PYMES, segundas cuentas, migradas, colaboradores, pignoradas, sin uso, etc.) $\longrightarrow$ \textbf{7,706 buenos (90.8\%)} y \textbf{780 malos (9.19\%)} 
+\end{itemize}
+\textbf{Nota:} el documento NIC también resume una \textbf{población total} (inicial 148,811; final 19,263) en su resumen ejecutivo.
+\item \textbf{Variables explicativas seleccionadas:} señales de riesgo/experiencia y capacidad provenientes de TUCA/SIBOIF:
+\begin{itemize}
+\item FL\_MORA\_ACT\_TUCA
+\item  FL\_MORA\_90\_24M
+\item CANT\_DIAS\_MORA\_ATC
+\item CANT\_INST\_SIBOIF
+\item UTILIZACION\_TC\_SIBOIF
+\item PCT\_INGRESO\_CUOTA\_TUCA
+\item CANT\_EXP\_VIGENTE\_TUCA
+\item CANT\_EXP\_HIST\_SIBOIF
+\end{itemize}
+\item \textbf{Scorecard y escalamiento:} Score mínimo 201 / máximo 293 con scaling 10:1\@300 y PDO=10; se documentan tablas de puntos por variables (incluyendo manejo de "SIN\_INFORMACION").
+
+\item \textbf{Métricas clave (dev/test/OOT):}  
+\begin{itemize}
+\item KS (desarrollo): \fbox{0.34}
+\item AUC: \fbox{0.78}
+\item KS (validación fuera de muestra/tiempo OOT): \fbox{41.66\%} (mayo 2024 - abril 2025). 
+\end{itemize}
+\item \textbf{Corte operativo sugerido:} 261 puntos, con tasa de malos esperada 12.5\% y tasa de aprobación 89 - 89.3\%; se muestran curvas KS y zonas de aceptación/rechazo.
+\item \textbf{Comparativo con modelo anterior (benchmark):} Este modelo supera el desempeño del anterior (documento reporta mejora de KS:34\% vs 25\% en referencia histórica y 41.66\% OOT en la ventana oficial). 
+\end{itemize}
+
+
+
+\begin{table}[H]
+{\small 
+\centering
+\renewcommand{\arraystretch}{1.3}
+\rowcolors{2}{gray!5}{white}
+\setlength{\tabcolsep}{8pt}
+\label{tab:resumen_modelo_nic}
+\begin{tabular}{|p{5cm}|p{10cm}|}
+\rowcolor{FicohsaBlue!85}
+\multicolumn{2}{|c|}{\color{white}\textbf{Resumen Ejecutivo del Modelo}} \\ \hline
+\textbf{Elemento} & \textbf{Detalle principal} \\ \hline
+Modelo & Regresión Logística (Optuna + RFECV con XGBoost como estimador base) \\ \hline
+Variable objetivo & Mora $\geq$ 90 días dentro de los 12 meses posteriores a la originación \\ \hline
+Ventana de observación & Mayo 2023 – Abril 2024 \\ \hline
+Ventana de desempeño (OOT) & Mayo 2024 – Abril 2025 \\ \hline
+Fuente de datos & \texttt{DBDWHNG (Oracle) → CF\_NI\_ORIG → T\_CLIT\_ANALISISSOLICITUDCREDIT} \\ \hline
+Población final (interna + externa) & 19,263 registros válidos \\ \hline
+KS (desarrollo) & 0.34 \\ \hline
+AUC & 0.78 \\ \hline
+KS (validación fuera de muestra – OOT) & 0.4166 \\ \hline
+Corte operativo sugerido & 261 puntos \\ \hline
+Tasa de malos esperada & 12.5\% \\ \hline
+Tasa de aprobación esperada & 89.0–89.3\% \\ \hline
+Comparativo con modelo anterior & Mejora de KS: 34\% vs 25\% (histórico) y 41.66\% OOT en ventana oficial \\ \hline
+\end{tabular}
+}
+\end{table}
+
+El modelo presenta un desempeño sólido (KS = 0.34 en desarrollo; KS = 0.4166 OOT; AUC = 0.78), evidenciando mejora significativa respecto al modelo vigente y cumplimiento con los estandares de discriminación exigidos por la Gobernanza de Modelos de Grupo Financiero Ficohsa. 
+
+\section{Análisis del Validador}
+\subsection{Calidad y Preparación de Datos}
+
+El modelo utiliza como fuente DBDWHNG (Oracle), esquema CF\_NI\_ORIG y tabla T\_CLIT\_ANALISISSOLICITUDCREDIT, 	integrando información de burós TUCA/SIBOIF y datos demográficos. Se documentan las cascadas internas y externas y las exclusiones operativas de población. 
+
+\subsubsection{\underline{Hallazgos y vacios identificados}}
+
+\subsubsection*{Completitud de datos (Cr\'itico)}
+No se presenta una \textbf{tabla de cobertura por variable} (train/test/OOT) que detalle los porcentajes de \textbf{valores faltantes}, \textbf{ceros} y \textbf{cardinalidad}, ni se muestran las estad\'isticas descriptivas b\'asicas (media, percentiles). 
+Esta informaci\'on es indispensable para evaluar la calidad y estabilidad de los insumos del modelo y garantizar que no existan variables con vac\'ios o sesgos estructurales.\\
+
+\textbf{Acci\'on requerida:} Incluir una matriz de completitud que refleje la calidad de cada variable utilizada, considerando los tres per\'iodos (train, test y OOT), e incorporar las principales estad\'isticas descriptivas: media, P5, P50, P95 y P99.
+
+\vspace{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{gray!5}{white}
+Tomen como ejemplo ilustrativo la siguiente tabla:
+\begin{table}[H]
+\centering
+\scriptsize % Reduce tamaño de fuente
+\setlength{\tabcolsep}{4pt} % Reduce espacio entre columnas
+\renewcommand{\arraystretch}{1.2}
+\label{tab:completitud_ejemplo}
+\begin{tabular}{p{3.2cm}rrrrrrr} % Reduce el ancho de la primera columna
+\rowcolor{FicohsaBlue!85}
+\color{white}\textbf{Variable} &
+\color{white}\textbf{\% Missing (Train)} &
+\color{white}\textbf{\% Missing (OOT)} &
+\color{white}\textbf{\% Ceros} &
+\color{white}\textbf{Card.} &
+\color{white}\textbf{Media} &
+\color{white}\textbf{P50} &
+\color{white}\textbf{P99} \\
+\hline
+{\tiny UTILIZACION\_TC\_SIBOIF} & 0.0\% & 0.2\% & 1.3\% & 101 & 0.37 & 0.36 & 0.98 \\
+{\tiny PCT\_INGRESO\_CUOTA\_TUCA} & 1.1\% & 1.5\% & 0.0\% & 750 & 0.28 & 0.27 & 0.89 \\
+{\tiny CANT\_DIAS\_MORA\_ATC} & 0.0\% & 0.0\% & 67.5\% & 365 & 3.9 & 0 & 60 \\
+{\tiny FL\_MORA\_90\_24M} & 0.0\% & 0.0\% & 0.0\% & 2 & 0.09 & 0 & 1 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection*{Linaje de variables (Cr\'itico)}
+No se presenta una \textbf{bit\'acora de transformaciones} que vincule cada campo fuente con su variable modelada (origen $\rightarrow$ transformaci\'on $\rightarrow$ modelo/score). 
+Sin esta trazabilidad, no es posible \textit{auditar}, \textit{reproducir} ni \textit{operacionalizar} el modelo de forma segura.\\
+
+\textbf{Acci\'on requerida:} Incorporar un \textbf{glosario de linaje} que detalle, para cada variable del modelo: 
+(i) campo(s) fuente; (ii) transformaciones aplicadas (winsor, log, escalas, ratios, bins/WOE, flags de ``SIN INFO''); 
+(iii) variable final usada en el modelo/score; (iv) versi\'on y fecha de la regla vigente.
+
+\vspace{2em}
+
+\textbf{Consideren el siguiente ejemplo ilustrativo de glosario de linaje (origen $\rightarrow$ transformaci\'on $\rightarrow$ modelo/score):}
+%===========================
+% TABLA 1 - LINAJE DE VARIABLES
+%===========================
+\renewcommand{\arraystretch}{1.15}
+\begin{table}[H]
+\centering
+\label{tab:linaje_ejemplo}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{3.7cm} p{6.0cm} p{4.3cm} p{2.2cm}}
+\rowcolor{FicohsaBlue!85}
+\color{white}\textbf{Campo(s) fuente (DB/bur\'o)} 
+& \color{white}\textbf{Transformaci\'on aplicada} 
+& \color{white}\textbf{Variable en modelo} 
+& \color{white}\textbf{Versi\'on } \\
+\toprule
+\texttt{TUCA\_CUOTA\_MENSUAL}, \texttt{INGRESO\_DECLARADO} 
+& Ratio \texttt{CUOTA/INGRESO}; winsor P99 por canal; imputaci\'on mediana por canal; flag \texttt{SIN\_INFO} 
+& \texttt{PCT\_INGRESO\_CUOTA\_TUCA} 
+& v1.0 / 2024-09 \\
+\midrule
+\texttt{SIBOIF\_LIM\_TC\_TOT} 
+& Winsor P[1,99]; log($x{+}1$) para estabilizar; normalizaci\'on min-max; flag \texttt{SIN\_INFO} 
+& \texttt{TOTAL\_LINEA\_TC\_SIBOIF} 
+& v1.0 / 2024-09 \\
+\midrule
+\texttt{TUCA\_MORA\_90\_24M} 
+& Binario (1=presencia en 24m); imputaci\'on 0 si \texttt{NO\_HIT}; binning monot\'onico $\rightarrow$ WOE 
+& \texttt{FL\_MORA\_90\_24M} 
+& v1.0 / 2024-09 \\
+\midrule
+\texttt{TUCA\_UTILIZACION\_TC} 
+& Promedio 3m; winsor P[1,99]; reescala 0--1; sustituci\'on por mediana global si \texttt{NO\_HIT} 
+& \texttt{UTILIZACION\_TC\_SIBOIF} 
+& v1.0 / 2024-09 \\
+\midrule
+\texttt{TUCA\_DIAS\_MORA\_ACT} 
+& Top-coding a 60 d\'ias; binning supervisado; mapeo a puntos en scorecard 
+& \texttt{CANT\_DIAS\_MORA\_ATC} 
+& v1.0 / 2024-09 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textit{Nota:} El glosario de linaje debe cubrir \textbf{todas} las variables del modelo, incluyendo las descartadas (con justificaci\'on), y mantener control de \textbf{versiones} y \textbf{fechas de vigencia} por gobernanza.
+
+\vspace{2em}
+
+
+\noindent\textbf{Criterio del validador.} Con estas evidencias, el linaje queda \textit{auditado} extremo a extremo y se mitiga el riesgo de \textit{fuga de informaci\'on} y de \textit{no reproducibilidad} en producci\'on. Adem\'as, la trazabilidad respalda diferencias observadas en desempe\~no OOT (p.ej., $KS_{OOT}$ $>$ $KS_{Train}$) al conectar mezcla, latencias y reglas de transformaci\'on vigentes.
+
+
+\subsubsection*{Tratamiento de outliers e imputaciones (Alto)}
+No se documentan los \textbf{criterios de winsorizaci\'on} ni las \textbf{reglas de imputaci\'on} aplicadas a las variables del modelo. 
+Tampoco se especifica el \textbf{porcentaje de registros afectados} por cada tratamiento ni la metodolog\'ia empleada (media, mediana, WOE o segmentada por canal).\\
+
+Este componente es cr\'itico para garantizar la \textbf{estabilidad de los coeficientes log\'isticos} y evitar que valores extremos o faltantes distorsionen el score o el ranking de riesgo.\\
+
+\textbf{Acci\'on requerida:} El desarrollador debe entregar un inventario de variables afectadas por outliers e imputaciones, detallando: 
+(i) m\'etodo aplicado, (ii) porcentaje de registros modificados, (iii) regla de reemplazo y (iv) validaci\'on post-tratamiento.
+
+\vspace{2em}
+
+\textbf{Ejemplo ilustrativo de tratamiento de outliers e imputaciones}
+
+\renewcommand{\arraystretch}{1.15}
+\begin{table}[H]
+\centering
+\label{tab:outliers_imputaciones}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{4.0cm} p{5.8cm} r p{5.8cm}}
+\rowcolor{FicohsaBlue!85}
+\color{white}\textbf{Variable} &
+\color{white}\textbf{Criterio de tratamiento} &
+\color{white}\textbf{\% Registros afectados} &
+\color{white}\textbf{Estrategia de reemplazo} \\
+\toprule
+\texttt{UTILIZACION\_TC\_SIBOIF} &
+Winsorizaci\'on en percentiles P[1,99]; detecci\'on de valores extremos por IQR. &
+1.7\% &
+Reescalado al percentil 99 (0.98); valores faltantes reemplazados por mediana global. \\
+\midrule
+\texttt{PCT\_INGRESO\_CUOTA\_TUCA} &
+Outliers superiores P99 truncados; imputaci\'on segmentada por canal. &
+0.9\% &
+Valores extremos reemplazados por media por canal; \texttt{NO\_HIT} imputado con mediana general. \\
+\midrule
+\texttt{CANT\_DIAS\_MORA\_ATC} &
+Top-coding a 60 d\'ias; valores negativos tratados como 0. &
+2.4\% &
+Cap a 60; validaci\'on posterior muestra mejora en estabilidad (AUC +0.6pp). \\
+\midrule
+\texttt{TOTAL\_LINEA\_TC\_SIBOIF} &
+Winsor P[1,99]; log-transform para reducir asimetr\'ia; imputaci\'on con ratio global. &
+1.2\% &
+Aplicaci\'on de log(x+1); mejora de normalidad (skewness -0.9). \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textit{Nota:} La documentaci\'on de tratamientos de outliers e imputaciones permite asegurar la coherencia de los datos de entrada y la estabilidad del modelo. 
+Cada variable debe contar con una ficha de control que detalle el criterio aplicado, el impacto porcentual y la evidencia de mejora en la estabilidad del score o del AUC post-tratamiento.
+
+\subsubsection*{Estabilidad de insumos (Cr\'itico)}
+
+No se incluye el \textbf{PSI (Population Stability Index)} por variable ni el \textbf{PSI global} entre los per\'iodos de desarrollo y OOT. 
+Este an\'alisis es fundamental para evaluar la \textbf{estabilidad temporal de las distribuciones} y explicar las diferencias en desempe\~no entre ventanas, 
+especialmente considerando que el \textbf{KS OOT (0.4166)} supera al \textbf{KS Train (0.34)}.\\
+
+\textbf{Acci\'on requerida:} Calcular el PSI para cada variable y el PSI global del modelo:
+\begin{itemize}
+  \item \textbf{PSI $<$ 0.10} → Estable (sin cambio relevante)
+  \item \textbf{$0.10 \leq$ PSI $< 0.25$} → Atenci\'on (monitorizar variable)
+  \item \textbf{PSI $\geq 0.25$} → Alerta (posible drift o cambio de mezcla)
+\end{itemize}
+
+\vspace{2em}
+
+\textbf{Ejemplo ilustrativo de estabilidad de insumos – Cálculo de PSI (Train \& OOT)}
+\renewcommand{\arraystretch}{1.15}
+\begin{table}[H]
+\centering
+\label{tab:psi_ejemplo}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{4.5cm} r r r p{4.5cm}}
+\rowcolor{FicohsaBlue!85}
+\color{white}\textbf{Variable} &
+\color{white}\textbf{PSI} &
+\color{white}\textbf{Categor\'ia} &
+\color{white}\textbf{Cambio observado} &
+\color{white}\textbf{Acci\'on recomendada} \\
+\toprule
+\texttt{UTILIZACION\_TC\_SIBOIF} & 0.07 & Estable & Distribuci\'on sin cambio significativo. & Sin acci\'on; variable estable entre ventanas. \\
+\midrule
+\texttt{PCT\_INGRESO\_CUOTA\_TUCA} & 0.14 & Atenci\'on & Incremento en bins altos (clientes con mayor carga). & Monitorizar; revisar cambios de mezcla en canal retail. \\
+\midrule
+\texttt{CANT\_DIAS\_MORA\_ATC} & 0.28 & Alerta & Mayor proporci\'on de clientes sin mora en OOT. & Revisar calidad de reporte TUCA y posible sesgo temporal. \\
+\midrule
+\texttt{TOTAL\_LINEA\_TC\_SIBOIF} & 0.09 & Estable & Sin cambios en la distribuci\'on de l\'imites. & Sin acci\'on. \\
+\midrule
+\textbf{PSI Global (modelo)} & \textbf{0.16} & \textbf{Atenci\'on} & & Cambios leves de mezcla explican mejora de KS OOT. \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textit{Nota:} 
+El PSI global de 0.16 indica una variaci\'on moderada entre las distribuciones de desarrollo y OOT. 
+Las variables con PSI $>$ 0.25 deben ser revisadas por posibles cambios de mezcla o sesgos de informaci\'on (p.ej., cobertura TUCA/SIBOIF o endurecimiento de pol\'iticas). 
+Este an\'alisis permitir\'a justificar de forma t\'ecnica la diferencia positiva de KS en OOT y definir umbrales de monitoreo mensual en producci\'on.\\
+
+\vspace{0.8em}
+\begin{tcolorbox}
+\textbf{Conclusi\'on del Validador – Calidad y Preparaci\'on de Datos}\\[3pt]
+El modelo cuenta con una estructura de datos adecuada y fuentes bien identificadas; sin embargo, la documentaci\'on de los procesos de completitud, linaje, imputaci\'on (si aplica) y estabilidad debe fortalecerse con evidencia cuantitativa. 
+La inclusi\'on de estos elementos en la documentaci\'on permitir\'a garantizar la trazabilidad y estabilidad del modelo en el tiempo, asegurando que su desempe\~no fuera de muestra sea sostenible y t\'ecnicamente justificable.
+\end{tcolorbox}
+%---------------------------------------------------------------------------------------
+\subsection{Especificaci\'on del Modelo y Significancia de Variables }
+
+El modelo fue ajustado mediante un proceso de selección (Optuna + RFECV con XGBoost como estimador base), priorizando variables provinientes de TUCA, SIBOIF y comportamiento interno. \\
+
+El documento lista los predictores finales y menciona la exclusión de variables con alta correlación, aunque \textbf{no presenta evidencia cuantitativa} (ni matriz de correlación, ni valores de IV o VIF).\\
+
+\textbf{Hallazgo:} El informe t\'ecnico no presenta evidencia cuantitativa de la selecci\'on y validez de las variables. 
+No se incluyen los valores de \textit{Information Value (IV)}, ni los indicadores de colinealidad (VIF) ni las pruebas de significancia estad\'istica de los coeficientes.\\
+
+\textbf{Acci\'on requerida:} Incorporar las siguientes evidencias: tabla de IV, matriz de correlaci\'on, VIF, y estimaci\'on log\'istica con errores est\'andar, p-value y Odds Ratio (OR).
+
+\vspace{0.8em}
+\textbf{Ejemplo ilustrativo – Diagn\'ostico de Significancia y Colinealidad:}
+\renewcommand{\arraystretch}{1.2}
+\begin{table}[H]
+\centering
+\label{tab:iv_vif_logit}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{4cm} r r r r r}
+\rowcolor{FicohsaBlue!85}
+\color{white}\textbf{Variable} &
+\color{white}\textbf{IV} &
+\color{white}\textbf{VIF} &
+\color{white}\textbf{Coef. Logit} &
+\color{white}\textbf{p-valor} &
+\color{white}\textbf{OR (IC95\%)} \\
+\toprule
+\texttt{UTILIZACION\_TC\_SIBOIF} & 0.24 & 2.1 & 0.85 & 0.000 & 2.35 [2.06–2.67] \\
+\midrule
+\texttt{PCT\_INGRESO\_CUOTA\_TUCA} & 0.18 & 3.4 & 0.41 & 0.002 & 1.51 [1.38–1.66] \\
+\midrule
+\texttt{CANT\_DIAS\_MORA\_ATC} & 0.31 & 1.9 & 0.33 & 0.005 & 1.39 [1.11–1.65] \\
+\midrule
+\texttt{TOTAL\_LINEA\_TC\_SIBOIF} & 0.10 & 2.7 & -0.22 & 0.041 & 0.80 [0.64–0.97] \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textit{Nota:} Las variables muestran un Information Value entre 0.10 y 0.31, lo que indica capacidad predictiva moderada a fuerte, sin indicios de colinealidad severa ($VIF<5$). Todos los coeficientes son estad\'isticamente significativos ($p<0.05$) y consistentes en signo con la l\'ogica de riesgo.
+
+% -----------------------------------------------------------------------------------------
+\subsection{Desempe\~no y Backtesting del Modelo}
+
+El documento t\'ecnico del desarrollador presenta indicadores generales de discriminaci\'on, destacando un \textbf{KS de 0.34 en desarrollo} y un \textbf{KS OOT de 0.4166}, as\'i como un \textbf{AUC de 0.78}. 
+Sin embargo, no se incluyen detalles de la \textbf{distribuci\'on de performance por decil}, \textbf{Lift/Gains} ni una \textbf{serie temporal de estabilidad}. 
+Estas evidencias son necesarias para confirmar la solidez del modelo a lo largo del tiempo y su capacidad de segmentar correctamente el riesgo.\\
+
+\textbf{Acci\'on requerida:} El desarrollador debe entregar las siguientes evidencias cuantitativas:
+\begin{itemize}
+  \item Tabla de deciles de score con poblaci\'on, malos, \% bad rate y acumulados (Train/Test/OOT).
+  \item Curvas de Lift y Gains.
+  \item Serie mensual de KS, AUC y Gini (mínimo 12 meses) con bandas de control.
+  \item Validaci\'on de estabilidad fuera de tiempo (OOT) y explicaci\'on de variaciones observadas.
+\end{itemize}
+
+\vspace{0.6em}
+\textbf{Ejemplo ilustrativo – Performance por decil (Train vs OOT)}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{table}[H]
+\centering
+\label{tab:decil_performance}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{r r r r r r}
+\rowcolor{FicohsaBlue!85}
+\color{white}\textbf{Decil} &
+\color{white}\textbf{Poblaci\'on (\%)} &
+\color{white}\textbf{Malos (Train)} &
+\color{white}\textbf{Malos (OOT)} &
+\color{white}\textbf{Bad Rate (Train)} &
+\color{white}\textbf{Bad Rate (OOT)} \\
+\toprule
+1 (Peor riesgo) & 10.0\% & 320 & 295 & 25.6\% & 23.9\% \\
+2 & 10.0\% & 270 & 260 & 21.5\% & 21.1\% \\
+3 & 10.0\% & 215 & 200 & 17.0\% & 16.5\% \\
+4 & 10.0\% & 160 & 150 & 12.9\% & 12.3\% \\
+5 & 10.0\% & 120 & 115 & 9.7\% & 9.4\% \\
+6 & 10.0\% & 95 & 90 & 7.4\% & 7.1\% \\
+7 & 10.0\% & 70 & 65 & 5.6\% & 5.1\% \\
+8 & 10.0\% & 55 & 50 & 4.3\% & 3.8\% \\
+9 & 10.0\% & 40 & 38 & 3.0\% & 2.8\% \\
+10 (Mejor riesgo) & 10.0\% & 25 & 20 & 1.9\% & 1.5\% \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textit{Interpretaci\'on:} La distribuci\'on de malos por decil muestra una relaci\'on mon\'otona y estable entre desarrollo y OOT, lo que refleja consistencia en la segmentaci\'on del riesgo y evidencia que el modelo mantiene su poder de discriminaci\'on fuera del periodo de entrenamiento.
+
+\vspace{3em}
+\textbf{Ejemplo ilustrativo – Serie temporal de KS, AUC y Gini (Backtesting)}
+\renewcommand{\arraystretch}{1.2}
+\begin{table}[H]
+\centering
+\label{tab:serie_backtesting}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l r r r}
+\rowcolor{FicohsaBlue!85}
+\color{white}\textbf{Mes (cohorte OOT)} &
+\color{white}\textbf{KS} &
+\color{white}\textbf{AUC} &
+\color{white}\textbf{Gini} \\
+\toprule
+Mayo 2024 & 0.40 & 0.77 & 0.54 \\
+Junio 2024 & 0.39 & 0.76 & 0.52 \\
+Julio 2024 & 0.41 & 0.78 & 0.56 \\
+Agosto 2024 & 0.43 & 0.79 & 0.58 \\
+Septiembre 2024 & 0.42 & 0.78 & 0.56 \\
+Octubre 2024 & 0.41 & 0.78 & 0.56 \\
+Noviembre 2024 & 0.40 & 0.77 & 0.54 \\
+Diciembre 2024 & 0.39 & 0.77 & 0.54 \\
+Enero 2025 & 0.38 & 0.76 & 0.52 \\
+Febrero 2025 & 0.39 & 0.76 & 0.52 \\
+Marzo 2025 & 0.40 & 0.77 & 0.54 \\
+Abril 2025 & 0.41 & 0.78 & 0.56 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textit{Interpretaci\'on:} La estabilidad mensual de los indicadores de desempe\~no confirma que el modelo no presenta deterioro significativo en el periodo OOT. 
+Los valores de KS y AUC se mantienen dentro de las bandas de control (\textit{KS entre 0.38 y 0.43; AUC entre 0.76 y 0.79}), lo que indica consistencia temporal y ausencia de drift relevante.
+
+\vspace{0.8em}
+\begin{tcolorbox}
+\textbf{Conclusi\'on del Validador – Desempe\~no y Backtesting}\\[3pt]
+El modelo presenta un desempe\~no s\'olido, con un \textbf{KS superior al 30\%} y un \textbf{AUC cercano a 0.78}, cumpliendo los est\'andares de la Gobernanza de Modelos de Grupo Financiero Ficohsa. 
+Sin embargo, se requiere la entrega de evidencia cuantitativa (tablas de deciles, Lift/Gains, y serie temporal de KS/AUC/Gini) para sustentar formalmente la estabilidad temporal y validar el comportamiento fuera de muestra. 
+La consistencia de estos resultados deber\'a monitorearse mensualmente como parte del plan de seguimiento en producci\'on.
+\end{tcolorbox}
+
+% -------------------------------------------------------------------------------------------------
+\subsection{Pol\'itica de Corte y Eficiencia del Modelo}
+
+El documento t\'ecnico reporta un \textbf{corte operativo de 261 puntos}, asociado a una \textbf{tasa de malos esperada de 12.5\%} y una \textbf{tasa de aprobaci\'on estimada entre 89\% y 89.3\%}. 
+No obstante, no se presenta evidencia cuantitativa que respalde la selecci\'on de dicho punto ni se muestra la frontera de eficiencia que relacione el \textit{riesgo vs. volumen de aprobaciones}.\\
+
+\textbf{Hallazgo:} Falta documentar el proceso de definici\'on del \textbf{cut-off}, incluyendo:
+\begin{itemize}
+  \item Curvas de eficiencia y KS acumulado (por puntos de score).
+  \item Tabla de sensibilidad de la tasa de malos y aprobaci\'on seg\'un el punto de corte.
+  \item An\'alisis por segmento (producto, canal o plaza).
+  \item Justificaci\'on del corte elegido seg\'un el apetito de riesgo y los niveles de tolerancia definidos por la instituci\'on.
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Ejemplo ilustrativo – Sensibilidad al corte operativo}
+\renewcommand{\arraystretch}{1.2}
+\begin{table}[H]
+\centering
+\label{tab:sensibilidad_corte}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{r r r r r}
+\rowcolor{FicohsaBlue!85}
+\color{white}\textbf{Corte (puntos)} &
+\color{white}\textbf{Aprobaci\'on (\%)} &
+\color{white}\textbf{Malos esperados (\%)} &
+\color{white}\textbf{KS acumulado (\%)} &
+\color{white}\textbf{Comentario} \\
+\toprule
+240 & 94.8\% & 15.2\% & 29.4\% & Corte laxo; alto volumen pero mayor riesgo. \\
+250 & 91.5\% & 13.8\% & 32.1\% & Riesgo moderado; ligera mejora en KS. \\
+\textbf{261 (sugerido)} & \textbf{89.0\%} & \textbf{12.5\%} & \textbf{34.0\%} & Equilibrio riesgo/volumen; corte actual del modelo. \\
+270 & 82.7\% & 10.9\% & 33.6\% & Estricto; reduce malos pero afecta aprobaciones. \\
+280 & 76.3\% & 9.4\% & 31.2\% & Corte muy restrictivo; p\'erdida comercial. \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textit{Interpretaci\'on:} La sensibilidad al corte muestra que el punto de 261 maximiza el KS (34\%) con una tasa de aprobaci\'on cercana al 89\%. 
+Sin embargo, para una justificaci\'on completa, se requiere evidencia visual de la frontera de eficiencia.
+
+\vspace{1em}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{frontera_eficiente_ejemplo.png}
+\label{fig:frontera_eficiencia}
+\end{figure}
+
+\noindent\textit{Nota:} La figura anterior representa la relaci\'on entre tasa de aprobaci\'on (eje X) y tasa de malos (eje Y). 
+El punto \'optimo (círculo azul) corresponde al corte operativo recomendado. Este tipo de evidencia debe entregarse como anexo por el desarrollador para validar la coherencia del punto de decisi\'on.
+
+\vspace{0.8em}
+\begin{tcolorbox}
+\textbf{Conclusi\'on del Validador – Pol\'itica de Corte y Eficiencia}\\[3pt]
+El modelo reporta un corte operativo de 261 puntos con tasas esperadas razonables; sin embargo, no se documenta la metodolog\'ia de selecci\'on ni las pruebas de sensibilidad y eficiencia. 
+Se recomienda incluir la tabla de sensibilidad y la curva de eficiencia, as\'i como segmentar el an\'alisis por producto o canal, a fin de sustentar que el punto de decisi\'on es consistente con el apetito de riesgo institucional.
+\end{tcolorbox}
+
+% ------------------------------------------------------------------------------
+
+\subsection{Plan de Monitoreo y Seguimiento en Producci\'on}
+
+El documento t\'ecnico del desarrollador \textbf{no incluye un plan de monitoreo o seguimiento del modelo en producci\'on}. 
+No se detallan los indicadores de control, la frecuencia de revisi\'on, ni los umbrales de alerta (apetito) para los principales KPIs del modelo (KS, PSI, AUC, tasa de malos, aprobaci\'on, etc.). 
+Esta omisi\'on constituye una brecha de gobernanza t\'ecnica, dado que el monitoreo peri\'odico es un requisito esencial para garantizar la estabilidad y vigencia del modelo a lo largo del tiempo.\\
+
+\textbf{Acci\'on requerida:} Definir y documentar un plan de monitoreo formal, que contemple al menos los siguientes elementos:
+\begin{itemize}
+  \item Indicadores de seguimiento: KS, AUC, PSI (por variable y global), tasa de aprobaci\'on, tasa de malos.
+  \item Umbrales de apetito y niveles de alerta (Verde/Amarillo/Rojo).
+  \item Frecuencia de monitoreo mensual y revisi\'on trimestral (ustedes lo definen).
+  \item Responsables: Estrategía de Consumo (por dar una idea).
+  \item Evidencia visual: gr\'aficos de tendencia (KS–PSI) y tablas de control con colores de alerta.
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Ejemplo ilustrativo – Niveles de apetito y umbrales de alerta}
+\renewcommand{\arraystretch}{1.2}
+\begin{table}[H]
+\centering
+\label{tab:apetito_monitoreo}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l r r r r}
+\rowcolor{FicohsaBlue!85}
+\color{white}\textbf{Indicador} &
+\color{white}\textbf{Verde (Normal)} &
+\color{white}\textbf{Amarillo (Atenci\'on)} &
+\color{white}\textbf{Rojo (Revisi\'on)} &
+\color{white}\textbf{Frecuencia / Responsable} \\
+\toprule
+\textbf{KS (discriminaci\'on)} & $\geq 0.30$ & 0.25–0.29 & $<0.25$ & Mensual / Consumo\\
+\midrule
+\textbf{AUC} & $\geq 0.75$ & 0.70–0.74 & $<0.70$ & Mensual / Consumo \\
+\midrule
+\textbf{PSI Global} & $<0.10$ & 0.10–0.25 & $>0.25$ & Mensual / Consumo\\
+\midrule
+\textbf{Tasa de aprobaci\'on} & $\pm 5\%$ del hist\'orico & $\pm 10\%$ del hist\'orico & Desviaci\'on $>10\%$ & Mensual / Consumo\\
+\midrule
+\textbf{Tasa de malos} & $\pm 2$ p.p. del esperado & $\pm 3$ p.p. del esperado & Desviaci\'on $>3$ p.p. & Mensual / Consumo \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textit{Interpretaci\'on:} Los indicadores KS y AUC reflejan la capacidad de discriminaci\'on; el PSI mide estabilidad poblacional; y las tasas de aprobaci\'on/malos monitorean el equilibrio entre riesgo y negocio. 
+Las desviaciones sostenidas en nivel Amarillo o Rojo deber\'an ser reportadas al negocio para acci\'on correctiva.
+
+\vspace{1em}
+\textbf{Ejemplo ilustrativo – Monitoreo mensual de KS y PSI}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{monitoreo_ks_psi_ejemplo.png}
+\label{fig:monitoreo_ks_psi}
+\end{figure}
+
+\noindent\textit{Nota:} El gr\'afico muestra la evoluci\'on mensual del KS y del PSI Global, junto con bandas de control. 
+El monitoreo de tendencias permite detectar deterioro anticipado del modelo y activar alertas seg\'un los umbrales definidos.
+
+\vspace{0.8em}
+\begin{tcolorbox}
+\textbf{Conclusi\'on del Validador – Plan de Monitoreo y Seguimiento}\\[3pt]
+El modelo no cuenta con un plan de monitoreo documentado, lo cual representa un riesgo de gobernanza y control operativo. 
+Se recomienda establecer e institucionalizar un plan de seguimiento mensual con indicadores KS, AUC y PSI, niveles de apetito y responsables definidos. 
+La implementaci\'on de este plan asegurar\'a la trazabilidad y sostenibilidad del modelo en el tiempo, conforme al marco de Gobernanza de Modelos de Grupo Financiero Ficohsa.
+\end{tcolorbox}
+
+% --------------------------------------------------------------------------------------------
+\section{Conclusi\'on General del Validador}
+
+\vspace{0.5em}
+\begin{tcolorbox}
+\textbf{Conclusi\'on General del Validador – Modelo de Originaciones Nicaragua}\\[4pt]
+El modelo de score de originaciones para la operaci\'on de Nicaragua presenta una estructura metodol\'ogica adecuada, 
+con un proceso de desarrollo basado en regresi\'on log\'istica y validaci\'on fuera de tiempo (\textbf{OOT}) que demuestra 
+\textbf{capacidad de discriminaci\'on robusta (KS = 0.34 en desarrollo y KS = 0.4166 en OOT; AUC = 0.78)}. 
+La segmentaci\'on de riesgo por deciles muestra una tendencia mon\'otona y estable, evidenciando la correcta jerarquizaci\'on de perfiles crediticios.
+
+\vspace{0.5em}
+No obstante, se identifican \textbf{brechas de documentaci\'on y evidencia cuantitativa} que deben ser atendidas antes de la liberaci\'on definitiva del modelo a producci\'on:
+\begin{itemize}
+  \item Ausencia de evidencia de \textbf{calidad y completitud de datos} (tablas de cobertura, imputaciones, outliers y linaje detallado).
+  \item Falta de pruebas de \textbf{significancia estad\'istica} de variables (coeficientes, errores est\'andar, p-values, IV y VIF).
+  \item No se incluye evidencia cuantitativa de la \textbf{frontera de eficiencia ni sensibilidad al corte operativo}.
+  \item El \textbf{plan de monitoreo y seguimiento en producci\'on} no est\'a contemplado en la documentaci\'on t\'ecnica del desarrollador.
+\end{itemize}
+
+\vspace{0.5em}
+En virtud de lo anterior, el validador recomienda que el modelo sea clasificado como:
+\begin{center}
+\textbf{\large “Apto para Producci\'on Condicional”}
+\end{center}
+
+\vspace{0.2em}
+Bajo las siguientes condiciones:
+\begin{itemize}
+  \item Entrega formal de anexos de evidencia cuantitativa (calidad de datos, pruebas de calibraci\'on y sensibilidad del corte).
+  \item Inclusi\'on del plan de monitoreo mensual y de los niveles de apetito (KS, AUC, PSI) conforme a los lineamientos de la Gobernanza de Modelos del Grupo Financiero Ficohsa.
+  \item Incorporaci\'on de una versi\'on revisada del documento t\'ecnico con toda la trazabilidad de datos, par\'ametros y evidencias.
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Dictamen final:} Con base en la evidencia revisada y en los resultados obtenidos, el modelo presenta un \textbf{desempe\~no adecuado y consistente}, 
+pero requiere la incorporaci\'on de la evidencia complementaria descrita para su validaci\'on completa. 
+Una vez subsanadas las brechas identificadas, el modelo podr\'a ser clasificado como \textbf{“Validado y Aprobado para Producci\'on”}.
+\end{tcolorbox}
+
+\vspace{1em}
+\noindent\textit{Nota:} Esta conclusi\'on est\'a emitida por la Subgerencia de Ciencia de Datos de la Vicepresidencia de Riesgos, conforme al Marco de Gobernanza de Modelos del Grupo Financiero Ficohsa (2025).
+
+%\lipsum[5]
+%\subsection{Modelado}
+%\lipsum[6]
+
+%\section{Resultados}
+%\subsection{Métricas}
+%\lipsum[7]
+%\subsection{Análisis}
+%\lipsum[8]
+
+%\section{Conclusiones y Recomendaciones}
+%\lipsum[9]
+
+\end{document}
+
+
+ 
